@@ -1,4 +1,5 @@
 import { uploadImage } from "../libs/cloudinary.js";
+import fs from "fs-extra";
 import Product from "../models/Product.js";
 
 export const getProducts = async (req, res) => {
@@ -15,7 +16,6 @@ export const createProduct = async (req, res) => {
     const { name, desc, price } = req.body;
     let image;
 
-    console.log(req.files);
     if (req.files?.image && req.files.image !== null) {
       const { secure_url, public_id } = await uploadImage(req.files.image.tempFilePath);
       await fs.remove(req.files.image.tempFilePath);
