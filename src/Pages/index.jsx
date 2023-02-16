@@ -1,2 +1,4 @@
-export { Layout } from "./Layout";
-export { NotFound } from "./NotFound";
+export * from "./Layout";
+export * from "./NotFound";
+export * from "./Home";
+export * from "./Cart";

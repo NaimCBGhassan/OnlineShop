@@ -1,3 +1,3 @@
-export { Cart } from "./Cart";
-export { Home } from "./Home";
-export { NavBar } from "./NavBar";
+export * from "./NavBar";
+export * from "./ProductCard";
+export * from "./CartRow";
