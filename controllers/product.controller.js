@@ -33,3 +33,16 @@ export const createProduct = async (req, res) => {
     res.status(500).json({ msg: "Internal server error" });
   }
 };
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const deletedProduct = await Post.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) return res.status(404).send(`Not Found`);
+
+    if (deletedPost.image.public_id) await deleteImage(deletedPost.image.public_id);
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
