@@ -1,20 +1,56 @@
+import { useDispatch } from "react-redux";
+import { removeToCart, addToCart, decrementOne } from "../store/cartSlice";
+
 export const CartRow = ({ item }) => {
-  console.log(item);
+  const dispatch = useDispatch();
+
+  const handleDecrement = (item) => {
+    if (item.cartQuantity === 1) {
+      dispatch(removeToCart(item._id));
+      return;
+    }
+    dispatch(decrementOne(item));
+  };
+
   return (
     <>
-      <tbody className="">
-        <tr>
-          <td>
-            <img src={item.image.url} alt={item.name} className="h-[100px]" />
-            <span className="text-base">{item.name}</span>
-            <span className="text-sm">{item.desc}</span>
-            <button className="text-xs bg-transparent border-none cursor-pointer">Remove</button>
-          </td>
-          <td>${item.price}</td>
-          <td>{item.cartQuantity}</td>
-          <td>${item.price * item.cartQuantity}</td>
-        </tr>
-      </tbody>
+      <hr />
+      <article className="flex items-center my-4 font-normal">
+        <div className="w-[35%] flex">
+          <div className="w-[40%] h-[8vw] hidden md:inline">
+            <img src={item.image.url} alt={item.name} className="h-[100%]" />
+          </div>
+          <div>
+            <p className="text-base">{item.name}</p>
+            <p className="text-sm">{item.desc}</p>
+            <button
+              className="text-xs text-gray-600 hover:text-black hover:text-[0.82rem] bg-transparent border-none cursor-pointer"
+              onClick={() => dispatch(removeToCart(item._id))}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+        <p className="w-[18%]">${item.price}</p>
+        <div className="w-[29%] self-stretch flex  items-center">
+          <p className="w-[85%] md:w-[45%] flex justify-around items-center border-solid border-gray-500 border-[1px] rounded">
+            <button
+              className="bg-transparent border-none text-lg w-full cursor-pointer hover:bg-black hover:text-white"
+              onClick={() => handleDecrement(item)}
+            >
+              -
+            </button>
+            <span className="px-2">{item.cartQuantity}</span>
+            <button
+              className="bg-transparent border-none text-lg w-full cursor-pointer hover:bg-black hover:text-white"
+              onClick={() => dispatch(addToCart(item))}
+            >
+              +
+            </button>
+          </p>
+        </div>
+        <p className="w-[18%] font-bold">${item.price * item.cartQuantity}</p>
+      </article>
     </>
   );
 };
