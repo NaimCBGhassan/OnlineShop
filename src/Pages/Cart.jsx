@@ -58,7 +58,7 @@ export const Cart = () => {
                 <ArrowLeft /> Continue Shopping
               </span>
             </Link>
-            <button className="py-2 mt-3 tracking-[1.15px] cursor-pointer hover:bg-gray-500 border-solid border-gray-400 border-[1px] rounded text-lg w-full bg-[#4b70e2] text-white">
+            <button className="py-2 mt-3 tracking-[1.15px] cursor-pointer  rounded border-none text-lg w-full bg-yellow-300 hover:bg-yellow-400 text-black">
               Check out
             </button>
           </div>

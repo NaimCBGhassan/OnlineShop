@@ -1,9 +1,12 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
 
 import Bag from "../assets/svg/Bag";
 import Webhook from "../assets/svg/Webhook";
+import MenuHamburgesa from "../assets/svg/MenuHamburgesa";
+import { useState } from "react";
 
 const Navbar = styled.nav`
   height: 60px;
@@ -13,10 +16,6 @@ const Navbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   color: #ffffff;
-
-  @media screen and (min-width: 578px) {
-    padding: 0 4rem;
-  }
 `;
 
 const NavTitle = styled.h2`
@@ -27,13 +26,15 @@ const NavTitle = styled.h2`
 
 export const NavBar = () => {
   const { cartTotalQuantity } = useSelector((state) => state.cart);
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 578px)" });
+  const [menuView, setMenuView] = useState(false);
 
   return (
     <Navbar>
       <Link to="/">
         <NavTitle>
           <Webhook />
-          OnlineShop
+          <span className="text-[5vh]">OnlineShop</span>
         </NavTitle>
       </Link>
       <Link to="/cart">
@@ -44,6 +45,23 @@ export const NavBar = () => {
           </span>
         </div>
       </Link>
+      {isTabletOrMobile ? (
+        <button
+          className="fixed bottom-2 right-2 z-10 grid place-content-center h-12 w-12 text-white bg-black rounded-full border-none cursor-pointer"
+          onClick={() => setMenuView(!menuView)}
+        >
+          <MenuHamburgesa />
+        </button>
+      ) : (
+        <div className="flex gap-2 ">
+          <Link to="/login" className="h-full p-2 cursor-pointer">
+            Login
+          </Link>
+          <Link to="/register" className="h-full p-2 cursor-pointer">
+            Register
+          </Link>
+        </div>
+      )}
     </Navbar>
   );
 };

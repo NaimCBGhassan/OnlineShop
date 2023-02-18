@@ -28,7 +28,7 @@ export const Home = () => {
     );
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] p-8">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] p-8">
       <h2 className="text-[5vh] font-normal col-span-full text-center py-3">New Arrivals</h2>
       {products.map((product) => (
         <ProductCard key={product._id} product={product} />
