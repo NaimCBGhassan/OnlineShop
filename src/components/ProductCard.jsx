@@ -43,7 +43,7 @@ export const ProductCard = ({ product }) => {
         <span>${price}</span>
       </div>
       <button
-        className="w-full h-[40px] mt-[1rem] font-normal border-none rounded outline-none cursor-pointer bg-[#4b70e2] hover:bg-[#4baaee] text-white tracking-widest"
+        className="w-full h-[40px] mt-[1rem] font-normal rounded bg-[#4b70e2] hover:bg-[#4baaee] text-white tracking-widest"
         onClick={() => handleAddToCart(product)}
       >
         Add To Cart

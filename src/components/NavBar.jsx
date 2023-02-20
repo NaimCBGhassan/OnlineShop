@@ -47,17 +47,17 @@ export const NavBar = () => {
       </Link>
       {isTabletOrMobile ? (
         <button
-          className="fixed bottom-2 right-2 z-10 grid place-content-center h-12 w-12 text-white bg-black rounded-full border-none cursor-pointer"
+          className="fixed bottom-2 right-2 z-10 grid place-content-center h-12 w-12 text-white bg-black rounded-full"
           onClick={() => setMenuView(!menuView)}
         >
           <MenuHamburgesa />
         </button>
       ) : (
         <div className="flex gap-2 ">
-          <Link to="/login" className="h-full p-2 cursor-pointer">
+          <Link to="/login" className="h-full p-2">
             Login
           </Link>
-          <Link to="/register" className="h-full p-2 cursor-pointer">
+          <Link to="/register" className="h-full p-2">
             Register
           </Link>
         </div>

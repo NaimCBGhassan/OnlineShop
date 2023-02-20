@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { Layout, NotFound, Home, Cart } from "../Pages/index";
+import { Layout, NotFound, Home, Cart, Register, LogIn } from "../Pages/index";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +14,14 @@ export const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+      {
+        path: "login",
+        element: <LogIn />,
       },
       {
         path: "*",

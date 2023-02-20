@@ -42,7 +42,7 @@ export const Cart = () => {
       {cart.cartItems.length !== 0 && (
         <footer className="flex flex-col-reverse md:flex-row justify-between items-center my-8 w-[70%] md:w-full mx-auto">
           <button
-            className="py-2 tracking-[1.15px] cursor-pointer w-[80%] md:w-[30%] bg-transparent border-solid border-gray-400 border-[1px] rounded text-lg  hover:bg-black text-gray-400 hover:text-white mt-4 mx-auto md:mx-0 md:mt-0 self-start"
+            className="py-2 tracking-[1.15px] w-[80%] md:w-[30%] bg-transparent border-solid border-gray-400 border-[1px] rounded text-lg  hover:bg-black text-gray-400 hover:text-white mt-4 mx-auto md:mx-0 md:mt-0 self-start"
             onClick={() => dispatch(clearCart())}
           >
             Clear Cart
@@ -58,7 +58,7 @@ export const Cart = () => {
                 <ArrowLeft /> Continue Shopping
               </span>
             </Link>
-            <button className="py-2 mt-3 tracking-[1.15px] cursor-pointer  rounded border-none text-lg w-full bg-yellow-300 hover:bg-yellow-400 text-black">
+            <button className="py-2 mt-3 tracking-[1.15px] rounded text-lg w-full bg-yellow-300 hover:bg-yellow-400 text-black">
               Check out
             </button>
           </div>

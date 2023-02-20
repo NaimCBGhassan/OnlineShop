@@ -3,6 +3,10 @@
 
 /* font-family: 'Nunito', sans-serif; */
 
+#root {
+  min-height: 100vh;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -10,11 +14,25 @@
   font-family: "Nunito", sans-serif;
 }
 
+body {
+  min-height: 100vh;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
+}
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 img {
   max-width: 100%;
+}
+
+input {
+  border: none;
 }

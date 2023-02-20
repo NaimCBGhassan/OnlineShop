@@ -24,7 +24,7 @@ export const CartRow = ({ item }) => {
             <p className="text-base">{item.name}</p>
             <p className="text-sm">{item.desc}</p>
             <button
-              className="text-xs text-gray-600 hover:text-black hover:text-[0.82rem] bg-transparent border-none cursor-pointer"
+              className="text-xs text-gray-600 hover:text-black hover:text-[0.82rem] bg-transparent"
               onClick={() => dispatch(removeToCart(item._id))}
             >
               Remove
@@ -35,14 +35,14 @@ export const CartRow = ({ item }) => {
         <div className="w-[29%] self-stretch flex  items-center">
           <p className="w-[85%] md:w-[45%] flex justify-around items-center border-solid border-gray-500 border-[1px] rounded">
             <button
-              className="bg-transparent border-none text-lg w-full cursor-pointer hover:bg-black hover:text-white"
+              className="bg-transparent text-lg w-full hover:bg-black hover:text-white"
               onClick={() => handleDecrement(item)}
             >
               -
             </button>
             <span className="px-2">{item.cartQuantity}</span>
             <button
-              className="bg-transparent border-none text-lg w-full cursor-pointer hover:bg-black hover:text-white"
+              className="bg-transparent text-lg w-full hover:bg-black hover:text-white"
               onClick={() => dispatch(addToCart(item))}
             >
               +
