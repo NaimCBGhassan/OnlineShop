@@ -5,8 +5,8 @@ export const connectDB = async () => {
   try {
     mongoose.set("strictQuery", false);
     const db = await mongoose.connect(MONGODB_URI);
-    console.log(`Db connected to ${db.connection.name}`);
+    console.log(`DB connected to ${db.connection.name}`);
   } catch (error) {
-    console.log(error);
+    console.log("DB connection failed");
   }
 };

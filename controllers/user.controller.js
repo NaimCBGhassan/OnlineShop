@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 
+import Joi from "joi";
 import JWT from "jsonwebtoken";
 import { SECRET_KEY } from "../config.js";
 
@@ -39,7 +40,6 @@ export const logIn = async (req, res) => {
     let logedUser = await User.findOne({ username });
     if (!logedUser) return res.status(404).json({ message: "Username doesn't exist" });
     const passwordCorrect = await User.comparePassword(password, logedUser.password);
-    console.log(passwordCorrect);
     if (!passwordCorrect) return res.status(400).json({ message: "Invalid password" });
 
     const token = JWT.sign({ id: logedUser._id }, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
