@@ -6,16 +6,16 @@ export const exist = async (req, res, next) => {
   const emailExist = await User.findOne({ email });
 
   if (usernameExist && emailExist) {
-    return res.json([
+    return res.status(400).json([
       { username: usernameExist.username, message: "Username already exist" },
       { email: emailExist.email, message: "Email already exist" },
     ]);
   }
   if (usernameExist) {
-    return res.json([{ username: usernameExist.username, message: "Username already exist" }]);
+    return res.status(400).json([{ username: usernameExist.username, message: "Username already exist" }]);
   }
   if (emailExist) {
-    return res.json([{ email: emailExist.email, message: "Email already exist" }]);
+    return res.status(400).json([{ email: emailExist.email, message: "Email already exist" }]);
   }
   return next();
 };

@@ -15,12 +15,14 @@ export const register = async (req, res) => {
       role,
     };
 
-    const newUser = new User(user);
+    let newUser = new User(user);
     await newUser.save();
 
-    const token = JWT.sign({ id: newUser._id }, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
+    delete user.password;
 
-    return res.json({ newUser, token });
+    const token = JWT.sign({ ...user, id: newUser._id }, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
+
+    return res.json(token);
   } catch (error) {
     console.log(error);
     if (error.errors) {
@@ -38,20 +40,20 @@ export const logIn = async (req, res) => {
   try {
     const { username, password } = req.body;
     let logedUser = await User.findOne({ username });
-    if (!logedUser) return res.status(404).json({ message: "Username doesn't exist" });
+    if (!logedUser) return res.status(404).json([{ message: "Username doesn't exist" }]);
     const passwordCorrect = await User.comparePassword(password, logedUser.password);
-    if (!passwordCorrect) return res.status(400).json({ message: "Invalid password" });
-
-    const token = JWT.sign({ id: logedUser._id }, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
+    if (!passwordCorrect) return res.status(400).json([{ message: "Invalid password" }]);
 
     logedUser = {
       username,
       email: logedUser.email,
+      role: logedUser.role,
       _id: logedUser._id,
-      token,
     };
 
-    return res.json(logedUser);
+    const token = JWT.sign(logedUser, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
+    console.log(JWT.decode(token));
+    return res.json(token);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
