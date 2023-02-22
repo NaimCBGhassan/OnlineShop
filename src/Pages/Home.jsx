@@ -2,7 +2,7 @@ import Empty from "../assets/svg/Empty";
 import Loading from "../assets/svg/Loading";
 import { ProductCard } from "../components";
 
-import { useGetProducts } from "../store/api/index";
+import { useGetProducts } from "../api/index";
 
 export const Home = () => {
   const { data: products = [], isLoading, error } = useGetProducts();

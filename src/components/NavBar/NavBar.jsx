@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 
-import Bag from "../assets/svg/Bag";
-import Webhook from "../assets/svg/Webhook";
-import MenuHamburgesa from "../assets/svg/MenuHamburgesa";
+import Bag from "../../assets/svg/Bag";
+import Webhook from "../../assets/svg/Webhook";
+import MenuHamburgesa from "../../assets/svg/MenuHamburgesa";
 import { useState } from "react";
+import AuthView from "./AuthView";
 
 const Navbar = styled.nav`
   height: 60px;
@@ -53,14 +54,7 @@ export const NavBar = () => {
           <MenuHamburgesa />
         </button>
       ) : (
-        <div className="flex gap-2 ">
-          <Link to="/login" className="h-full p-2">
-            Login
-          </Link>
-          <Link to="/register" className="h-full p-2">
-            Register
-          </Link>
-        </div>
+        <AuthView />
       )}
     </Navbar>
   );
