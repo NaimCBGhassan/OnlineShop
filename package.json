@@ -20,6 +20,7 @@
     "fs-extra": "^11.1.0",
     "joi": "^17.8.1",
     "jsonwebtoken": "^9.0.0",
+    "mercadopago": "^1.5.15",
     "mongoose": "^6.9.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20"

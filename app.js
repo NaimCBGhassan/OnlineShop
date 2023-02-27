@@ -5,6 +5,7 @@ import fileUpload from "express-fileupload";
 
 import productsRoutes from "./routes/products.routes.js";
 import userRouter from "./routes/user.routes.js";
+import mpRoutes from "./routes/mp.routes.js";
 
 const app = express();
 
@@ -25,4 +26,5 @@ app.get("/api", (req, res) => res.json({ products: "/api/products" }));
 
 app.use("/api/products", productsRoutes);
 app.use("/api", userRouter);
+app.use("/api/checkout", mpRoutes);
 export default app;

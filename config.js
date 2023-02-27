@@ -9,3 +9,5 @@ export const api_key = process.env.api_key;
 export const api_secret = process.env.api_secret;
 
 export const SECRET_KEY = process.env.SECRET_KEY;
+
+export const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN;
