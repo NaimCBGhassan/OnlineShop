@@ -1,14 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArrowLeft from "../assets/svg/ArrowLeft";
 
 import Empty from "../assets/svg/Empty";
 import { CartRow } from "../components";
+import MPButton from "../components/MPButton";
 import { clearCart } from "../store/cartSlice";
 
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="w-[90%] md:w-[80%] mx-auto">
@@ -58,9 +61,17 @@ export const Cart = () => {
                 <ArrowLeft /> Continue Shopping
               </span>
             </Link>
-            <button className="py-2 mt-3 tracking-[1.15px] rounded text-lg w-full bg-yellow-300 hover:bg-yellow-400 text-black">
-              Check out
-            </button>
+
+            {auth.userLoaded ? (
+              <MPButton />
+            ) : (
+              <button
+                className="py-2 mt-3 tracking-[1.15px] rounded text-lg w-full bg-yellow-300 hover:bg-yellow-400 text-black"
+                onClick={() => navigate("/login")}
+              >
+                Login to Check out
+              </button>
+            )}
           </div>
         </footer>
       )}

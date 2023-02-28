@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import * as Yup from "yup";
 import jwt_decode from "jwt-decode";
@@ -14,6 +15,7 @@ export const LogIn = () => {
   const [passwordError, setPasswordError] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { mutateAsync } = useLogin();
   return (
@@ -30,17 +32,19 @@ export const LogIn = () => {
             const token = await mutateAsync(values);
             const res = jwt_decode(token);
             dispatch(auth({ ...res, token }));
+            setSubmitting(false);
+            navigate("/cart");
           } catch (error) {
             error.data.forEach(({ message }) => {
+              console.log("Entro");
               if (message.includes("Username")) setUsernameError({ message });
               if (message.includes("password")) setPasswordError({ message });
             });
-          } finally {
+            setSubmitting(false);
             setTimeout(() => {
               setUsernameError(false);
               setPasswordError(false);
             }, 2000);
-            setSubmitting(false);
           }
         }}
       >

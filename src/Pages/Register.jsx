@@ -7,7 +7,6 @@ import jwt_decode from "jwt-decode";
 
 import Loading from "../assets/svg/Loading.jsx";
 import { useRegister } from "../api/user.js";
-import { auth } from "../store/authSlice";
 
 export const Register = () => {
   const [repasswordError, setRepasswordError] = useState(false);
@@ -18,14 +17,12 @@ export const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Entro");
     if (auth.userLoaded) {
       navigate("/cart");
     }
   }, [auth]);
 
   const dispatch = useDispatch();
-
   const { mutateAsync } = useRegister();
 
   return (
@@ -44,9 +41,7 @@ export const Register = () => {
             if (values.password === values.repassword) setRepasswordError(false);
             values.role = "User";
             const token = await mutateAsync(values);
-            console.log(token);
             const res = jwt_decode(token);
-            console.log(res);
             dispatch(auth({ ...res, token }));
           } catch (error) {
             error.data.forEach(({ message }) => {
