@@ -28,6 +28,11 @@ const userSchema = new Schema(
       required: true,
       enum: { values: ["User", "Admin"], message: "The role `{VALUE}` doesn't exist" },
     },
+    customerId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   { versionKey: false }
 );

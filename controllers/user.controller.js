@@ -1,18 +1,22 @@
-import User from "../models/User.js";
-
-import Joi from "joi";
 import JWT from "jsonwebtoken";
+
+import User from "../models/User.js";
+import { MPConfig, MPCreateClient } from "../libs/mercadopago.js";
 import { SECRET_KEY } from "../config.js";
 
 export const register = async (req, res) => {
   try {
     let { username, email, password, role } = req.body;
+    MPConfig();
+
+    let { data: customer } = await MPCreateClient(email);
 
     const user = {
       username,
       email,
       password: await User.hashPassword(password),
       role,
+      customerId: customer.id,
     };
 
     let newUser = new User(user);
