@@ -36,7 +36,6 @@ export const LogIn = () => {
             navigate("/cart");
           } catch (error) {
             error.data.forEach(({ message }) => {
-              console.log("Entro");
               if (message.includes("Username")) setUsernameError({ message });
               if (message.includes("password")) setPasswordError({ message });
             });

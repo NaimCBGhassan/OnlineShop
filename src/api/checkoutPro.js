@@ -1,21 +1,18 @@
 import axios from "axios";
 
-export const checkoutMP = async ({ cartItems, auth }) => {
-  const { data } = await axios.post("/api/checkout", { cartItems, auth });
+export const checkoutMP = async ({ data }) => {
+  const script = document.getElementById("mp");
+  script.setAttribute("data-preference-id", data.global);
+  const res = await axios.get("https://sdk.mercadopago.com/js/v2");
+  script.innerText = res.data;
+  console.log(new window.MercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY), { type: "text/javascript" });
+  /*   const mp = await new window.MercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY);
+  console.log(mp);
 
-  if (data.global) {
-    const script = document.getElementById("mercado-pago");
-    script.setAttribute("data-preference-id", data.global);
-
-    const mp = await new window.MercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY, {
-      locale: "es-AR",
-    });
-
-    const checkout = mp.checkout({
-      preference: {
-        id: data.global,
-      },
-    });
-    return checkout;
-  }
+  const checkout = mp.checkout({
+    preference: {
+      id: data.global,
+    },
+  });
+  return checkout; */
 };
