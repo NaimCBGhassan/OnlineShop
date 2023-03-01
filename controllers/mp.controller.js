@@ -13,20 +13,20 @@ export const createPayment = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+  console.log(customer);
 
-  const items = cartItems.map((item) => {
-    return {
-      title: item.name,
-      description: item.desc,
-      picture_url: item.image.url,
-      currency_id: "ARS",
-      quantity: item.cartQuantity,
-      unit_price: item.price,
-    };
-  });
   const preference = {
     binary_mode: true,
-    items,
+    items: cartItems.map((item) => {
+      return {
+        title: item.name,
+        description: item.desc,
+        picture_url: item.image.url,
+        currency_id: "ARS",
+        quantity: item.cartQuantity,
+        unit_price: item.price,
+      };
+    }),
     payer: {
       name: auth.username,
       surname: "",
@@ -39,7 +39,7 @@ export const createPayment = async (req, res) => {
       pending: "http://localhost:5173",
     },
     auto_return: "approved",
-    metadata: { customer: customer.results[0].id },
+    metadata: { customer: customer.id },
   };
 
   try {

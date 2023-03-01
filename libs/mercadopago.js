@@ -20,7 +20,7 @@ const axiosClient = axios.create({
 
 export const MPCreateClient = async (email) => {
   try {
-    await axiosClient.post("/", {
+    return await axiosClient.post("/", {
       email: MP_TEST_EMAIL || email, //above
     });
   } catch (error) {
@@ -30,12 +30,20 @@ export const MPCreateClient = async (email) => {
 
 export const MPUpdateClient = async ({ cartItems, auth }) => {
   try {
-    await axiosClient.put(`/${auth.customerId}`, {
+    return await axiosClient.put(`/${auth.customerId}`, {
       metadata: {
         userId: auth.id,
         cart: cartItems,
       },
     });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const MPGetClient = async (email) => {
+  try {
+    return await axiosClient.get(`/search?email=test_user_1320346500@testuser.com`);
   } catch (error) {
     throw error;
   }
