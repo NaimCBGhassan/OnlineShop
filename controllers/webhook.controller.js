@@ -1,6 +1,6 @@
 import axios from "axios";
-import mercadopago from "mercadopago";
 import { MP_ACCESS_TOKEN } from "../config.js";
+import Order from "../models/Order.js";
 
 const axiosWebhook = axios.create({
   baseURL: "https://api.mercadopago.com/v1/payments",
@@ -9,17 +9,36 @@ const axiosWebhook = axios.create({
   },
 });
 
+const createOrder = async (paymentData) => {
+  const newOrder = new Order({
+    userId: paymentData.metadata.userId,
+    customerId: paymentData.metadata.customerId,
+    paymentIntentId: paymentData.id,
+    products: JSON.parse(paymentData.metadata.cartItems),
+    subtotal: paymentData.transaction_details.net_received_amount,
+    total: paymentData.transaction_details.total_paid_amount,
+    paymentStatus: paymentData.status,
+  });
+  try {
+    const savedOrder = await newOrder.save();
+    console.log("ProcessedOrder:", savedOrder);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const webhook = async (req, res) => {
   console.log(req.body);
 
   try {
     const paymentData = await axiosWebhook.get(`/${req.body.id}`);
-    console.log(data);
+    console.log(paymentData);
   } catch (error) {
     console.log(error);
     return res.status(500).send(`Webhokk Error: ${error.message}`);
   }
-  if (data.type === "payment") {
+  if (paymentData.type === "payment") {
+    createOrder(paymentData);
   }
 
   return res.status(200);

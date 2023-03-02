@@ -21,7 +21,7 @@ const axiosClient = axios.create({
 export const MPCreateClient = async (email) => {
   try {
     return await axiosClient.post("/", {
-      email: MP_TEST_EMAIL || email, //above
+      email: MP_TEST_EMAIL || email,
     });
   } catch (error) {
     throw error;
@@ -33,6 +33,7 @@ export const MPUpdateClient = async ({ cartItems, auth }) => {
     return await axiosClient.put(`/${auth.customerId}`, {
       metadata: {
         userId: auth.id,
+        customerId: auth.customerId,
         cart: cartItems,
       },
     });

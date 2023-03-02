@@ -13,7 +13,7 @@ export const createPayment = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(customer);
+  console.log(customer.metadata);
 
   const preference = {
     binary_mode: true,
