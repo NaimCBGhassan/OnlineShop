@@ -32,7 +32,7 @@ export const webhook = async (req, res) => {
 
   try {
     paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
-    console.log(payment);
+    console.log("Solicitud de pago exiotosa");
   } catch (error) {
     console.log("Error en payment");
     return res.status(500).send(`Webhokk Error: ${error.message}`);
