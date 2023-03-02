@@ -13,7 +13,6 @@ export const createPayment = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(customer.metadata);
 
   const preference = {
     binary_mode: true,
@@ -39,7 +38,7 @@ export const createPayment = async (req, res) => {
       pending: "http://localhost:5173",
     },
     auto_return: "approved",
-    metadata: { customer: customer.id },
+    metadata: { customer },
   };
 
   try {
