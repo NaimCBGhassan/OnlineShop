@@ -38,9 +38,7 @@ export const webhook = async (req, res) => {
     return res.status(500).send(`Webhokk Error: ${error.message}`);
   }
 
-  console.log(paymentData.data);
-  console.log(paymentData.data.type);
-  if (paymentData.data.type === "payment") {
+  if (paymentData.data.operation_type === "regular_payment") {
     createOrder(paymentData.data);
   }
 
