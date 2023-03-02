@@ -29,9 +29,10 @@ const createOrder = async (paymentData) => {
 
 export const webhook = async (req, res) => {
   console.log(req.body);
+  let paymentData;
 
   try {
-    const paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
+    paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
     console.log(paymentData);
   } catch (error) {
     console.log(error.response.data);
