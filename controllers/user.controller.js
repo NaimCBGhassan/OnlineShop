@@ -1,18 +1,27 @@
-import User from "../models/User.js";
-
-import Joi from "joi";
 import JWT from "jsonwebtoken";
+
+import User from "../models/User.js";
+import { MPConfig, MPCreateClient, MPGetClient } from "../libs/mercadopago.js";
 import { SECRET_KEY } from "../config.js";
 
 export const register = async (req, res) => {
   try {
+    let customer;
     let { username, email, password, role } = req.body;
+    MPConfig();
+    try {
+      const { data } = await MPCreateClient(email);
+      customer = data;
+    } catch (error) {
+      console.log(error);
+    }
 
     const user = {
       username,
       email,
       password: await User.hashPassword(password),
       role,
+      customerId: customer.id,
     };
 
     let newUser = new User(user);
@@ -48,11 +57,12 @@ export const logIn = async (req, res) => {
       username,
       email: logedUser.email,
       role: logedUser.role,
+      customerId: logedUser.customerId,
       _id: logedUser._id,
     };
 
     const token = JWT.sign(logedUser, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
-    console.log(JWT.decode(token));
+
     return res.json(token);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });

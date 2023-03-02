@@ -6,6 +6,7 @@ import fileUpload from "express-fileupload";
 import productsRoutes from "./routes/products.routes.js";
 import userRouter from "./routes/user.routes.js";
 import mpRoutes from "./routes/mp.routes.js";
+import webhookRoutes from "./routes/webhook.routes.js";
 
 const app = express();
 
@@ -27,4 +28,5 @@ app.get("/api", (req, res) => res.json({ products: "/api/products" }));
 app.use("/api/products", productsRoutes);
 app.use("/api", userRouter);
 app.use("/api/checkout", mpRoutes);
+app.use("/api/webhook", webhookRoutes);
 export default app;
