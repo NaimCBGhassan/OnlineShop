@@ -10,11 +10,12 @@ const axiosWebhook = axios.create({
 });
 
 const createOrder = async (paymentData) => {
+  console.log(paymentData);
   const newOrder = new Order({
     userId: paymentData.metadata.userId,
     customerId: paymentData.metadata.customerId,
     paymentIntentId: paymentData.id,
-    products: JSON.parse(paymentData.metadata.cartItems),
+    products: paymentData.metadata.cartItems,
     subtotal: paymentData.transaction_details.net_received_amount,
     total: paymentData.transaction_details.total_paid_amount,
     paymentStatus: paymentData.status,
