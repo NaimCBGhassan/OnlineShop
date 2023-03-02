@@ -21,21 +21,20 @@ const createOrder = async (paymentData) => {
   });
   try {
     const savedOrder = await newOrder.save();
-    console.log("ProcessedOrder:", savedOrder);
+    console.log("solicitud de gurdar en base de dato la orden exitosa");
   } catch (error) {
-    console.log(error.response.data);
+    console.log("Error en guardar la orden");
   }
 };
 
 export const webhook = async (req, res) => {
-  console.log(req.body);
   let paymentData;
 
   try {
     paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
-    console.log(paymentData.data);
+    console.log("solicitud de pago exitosa");
   } catch (error) {
-    console.log(error.response.data);
+    console.log("Error en payment");
     return res.status(500).send(`Webhokk Error: ${error.message}`);
   }
   if (paymentData.type === "payment") {
