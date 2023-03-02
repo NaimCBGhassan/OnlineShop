@@ -9,9 +9,9 @@ export const createPayment = async (req, res) => {
 
   try {
     let { data } = await MPUpdateClient({ cartItems, auth });
-    metadata.userId = data.userId;
-    metadata.customerId = data.customerId;
-    metadata.cartItems = data.cartItems;
+    metadata.userId = data.metadata.userId;
+    metadata.customerId = data.metadata.customerId;
+    metadata.cartItems = data.metadata.cartItems;
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +40,7 @@ export const createPayment = async (req, res) => {
       pending: "http://localhost:5173",
     },
     auto_return: "approved",
-    metadata,
+    metadata: metadata,
   };
 
   try {

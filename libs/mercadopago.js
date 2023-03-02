@@ -32,9 +32,9 @@ export const MPUpdateClient = async ({ cartItems, auth }) => {
   try {
     return await axiosClient.put(`/${auth.customerId}`, {
       metadata: {
-        userId: auth.id,
+        userId: auth.userId,
         customerId: auth.customerId,
-        cart: cartItems,
+        cartItems: cartItems,
       },
     });
   } catch (error) {
