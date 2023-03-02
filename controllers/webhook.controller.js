@@ -23,7 +23,7 @@ const createOrder = async (paymentData) => {
     const savedOrder = await newOrder.save();
     console.log("ProcessedOrder:", savedOrder);
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
   }
 };
 
@@ -33,13 +33,13 @@ export const webhook = async (req, res) => {
 
   try {
     paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
-    console.log(paymentData);
+    console.log(paymentData.data);
   } catch (error) {
     console.log(error.response.data);
     return res.status(500).send(`Webhokk Error: ${error.message}`);
   }
   if (paymentData.type === "payment") {
-    createOrder(paymentData);
+    createOrder(paymentData.data);
   }
 
   return res.status(200);
