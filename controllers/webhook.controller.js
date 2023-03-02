@@ -10,7 +10,6 @@ const axiosWebhook = axios.create({
 });
 
 const createOrder = async (paymentData) => {
-  console.log(paymentData);
   const newOrder = new Order({
     userId: paymentData.metadata.userId,
     customerId: paymentData.metadata.customerId,
@@ -24,7 +23,7 @@ const createOrder = async (paymentData) => {
     const savedOrder = await newOrder.save();
     console.log("solicitud de gurdar en base de dato la orden exitosa");
   } catch (error) {
-    console.log("Error en guardar la orden");
+    console.log(error.response.data);
   }
 };
 
