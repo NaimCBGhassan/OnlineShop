@@ -23,7 +23,7 @@ const createOrder = async (paymentData) => {
     const savedOrder = await newOrder.save();
     console.log("solicitud de gurdar en base de dato la orden exitosa");
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error);
   }
 };
 
