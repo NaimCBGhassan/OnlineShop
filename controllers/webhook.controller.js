@@ -31,10 +31,10 @@ export const webhook = async (req, res) => {
   console.log(req.body);
 
   try {
-    const paymentData = await axiosWebhook.get(`/${req.body.id}`);
+    const paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
     console.log(paymentData);
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
     return res.status(500).send(`Webhokk Error: ${error.message}`);
   }
   if (paymentData.type === "payment") {
