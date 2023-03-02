@@ -23,7 +23,7 @@ const orderSchema = new Schema(
         cartQuantity: { type: String },
       },
     ],
-    subTotal: { type: Number, required: true },
+    subtotal: { type: Number, required: true },
     total: { type: Number, required: true },
     deliveryStatus: { type: String, default: "pending" },
     paymentStatus: { type: String, required: true },
