@@ -3,13 +3,15 @@ import mercadopago from "mercadopago";
 import { MPConfig, MPUpdateClient } from "../libs/mercadopago.js";
 
 export const createPayment = async (req, res) => {
-  let customer;
+  const metadata = {};
   const { cartItems, auth } = req.body;
   MPConfig();
 
   try {
     let { data } = await MPUpdateClient({ cartItems, auth });
-    customer = data;
+    metadata.userId = data.userId;
+    metadata.customerId = data.customerId;
+    metadata.cartItems = data.cartItems;
   } catch (error) {
     console.log(error);
   }
@@ -38,7 +40,7 @@ export const createPayment = async (req, res) => {
       pending: "http://localhost:5173",
     },
     auto_return: "approved",
-    metadata: { customer },
+    metadata,
   };
 
   try {
