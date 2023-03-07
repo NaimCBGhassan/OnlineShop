@@ -2,18 +2,21 @@ import { uploadImage } from "../libs/cloudinary.js";
 import fs from "fs-extra";
 import Product from "../models/Product.js";
 
+/* GET */
+
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ msg: "Internal server error" });
   }
 };
 
+/* CREATE */
 export const createProduct = async (req, res) => {
   try {
-    const { name, desc, price } = req.body;
+    const { name, brand, desc, price } = req.body;
     let image;
 
     if (req.files?.image && req.files.image !== null) {
@@ -25,7 +28,7 @@ export const createProduct = async (req, res) => {
       };
     }
 
-    const createdProduct = new Product({ name, desc, price, image });
+    const createdProduct = new Product({ name, brand, desc, price, image });
     const newProduct = await createdProduct.save();
     res.json(newProduct);
   } catch (error) {

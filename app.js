@@ -5,7 +5,7 @@ import fileUpload from "express-fileupload";
 
 import productsRoutes from "./routes/products.routes.js";
 import userRouter from "./routes/user.routes.js";
-import mpRoutes from "./routes/mp.routes.js";
+import checkoutRoutes from "./routes/checkout.routes.js";
 import webhookRoutes from "./routes/webhook.routes.js";
 
 const app = express();
@@ -22,11 +22,24 @@ app.use(
 );
 
 /*Routes */
-app.get("/", (req, res) => res.json({ products: "/api/products" }));
-app.get("/api", (req, res) => res.json({ products: "/api/products" }));
+
+const routes = {
+  products: "/api/products",
+  auth: {
+    login: "/api/login",
+    register: "/api/register",
+  },
+  mercadoPagoApi: {
+    checkout: "/api/checkout",
+    webhook: "/api/webhook",
+  },
+};
+
+app.get("/", (req, res) => res.json(routes));
+app.get("/api", (req, res) => res.json(routes));
 
 app.use("/api/products", productsRoutes);
 app.use("/api", userRouter);
-app.use("/api/checkout", mpRoutes);
+app.use("/api/checkout", checkoutRoutes);
 app.use("/api/webhook", webhookRoutes);
 export default app;

@@ -15,12 +15,11 @@ const orderSchema = new Schema(
     products: [
       {
         id: { type: String },
-        name: { type: String },
-        brand: { type: String },
-        desc: { type: String },
-        price: { type: String },
-        image: { type: String },
-        cartQuantity: { type: String },
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        unit_price: { type: String, required: true },
+        picture_url: { type: String, required: true },
+        quantity: { type: String, required: true },
       },
     ],
     subtotal: { type: Number, required: true },
