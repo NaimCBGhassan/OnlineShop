@@ -1,35 +1,23 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { useMutation } from "react-query";
 
-import { checkoutMP } from "../api/checkoutPro";
+import { checkoutMP, useMutateButtonId } from "../api/checkoutPro";
 import Loading from "../assets/svg/Loading";
-
-function useMutateButtonId({ cartItems, auth }) {
-  return useMutation({
-    mutationKey: ["buttonId"],
-    mutationFn: async () => {
-      try {
-        const res = await axios.post("/api/checkout", { cartItems, auth });
-        return res.data;
-      } catch (error) {
-        throw error.response;
-      }
-    },
-  });
-}
 
 export default function MPButton() {
   const { cartItems } = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
   let { mutateAsync, data, isLoading } = useMutateButtonId({ cartItems, auth });
 
+  useEffect(() => {
+    const script = document.getElementById("mercado-pago");
+    if (data) {
+      checkoutMP({ data, script });
+    }
+  }, [data]);
+
   const handleCheckout = async () => {
-    const data = await mutateAsync({ cartItems, auth });
-    checkoutMP({ data })
-      .then((checkout) => (async () => checkout.open())())
-      .catch((err) => console.log(err));
+    await mutateAsync({ cartItems, auth });
   };
 
   return (

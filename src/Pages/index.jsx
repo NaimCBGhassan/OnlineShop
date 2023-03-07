@@ -4,3 +4,7 @@ export * from "./Home";
 export * from "./Cart";
 export * from "./Register";
 export * from "./LogIn";
+export * from "./Admin/Dashboard";
+export * from "./Admin/Summary";
+export * from "./Admin/Products/Products";
+export * from "./Admin/Products/CreateProducts";

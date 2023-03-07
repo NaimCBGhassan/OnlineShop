@@ -23,9 +23,14 @@ const AuthView = () => {
           </Link>
         </div>
       ) : (
-        <button onClick={handleLogout} className="bg-transparent text-white h-full p-2 text-base">
-          Logout
-        </button>
+        <div className="flex gap-2 ">
+          <Link to="/admin" className="h-full p-2">
+            Admin
+          </Link>
+          <div onClick={handleLogout} className="text-white h-full p-2 cursor-pointer">
+            Logout
+          </div>
+        </div>
       )}
     </>
   );

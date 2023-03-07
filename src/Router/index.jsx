@@ -1,6 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { Layout, NotFound, Home, Cart, Register, LogIn } from "../Pages/index";
+import {
+  Layout,
+  NotFound,
+  Home,
+  Cart,
+  Register,
+  LogIn,
+  Dashboard,
+  Products,
+  Summary,
+  CreateProducts,
+} from "../Pages/index";
 
 export const router = createBrowserRouter([
   {
@@ -16,12 +27,36 @@ export const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "register",
+        path: "/register",
         element: <Register />,
       },
       {
-        path: "login",
+        path: "/login",
         element: <LogIn />,
+      },
+      {
+        path: "/admin",
+        element: <Dashboard />,
+        children: [
+          {
+            index: true,
+            element: <Summary />,
+          },
+          {
+            path: "summary",
+            element: <Summary />,
+          },
+          {
+            path: "products",
+            element: <Products />,
+            children: [
+              {
+                path: "create-product",
+                element: <CreateProducts />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: "*",
