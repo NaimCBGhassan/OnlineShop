@@ -4,7 +4,7 @@ import { SECRET_KEY } from "../config.js";
 
 export const isLogged = (req, res, next) => {
   const token = req.headers["authorization"];
-  console.log(token);
+
   if (!token) return res.status(401).json([{ message: "Acces denied. Not authenticated" }]);
   try {
     const user = jwt.verify(token, SECRET_KEY);
@@ -14,6 +14,14 @@ export const isLogged = (req, res, next) => {
   }
 
   return next();
+};
+
+export const isUser = (req, res, next) => {
+  if (req.user._id === req.params.id || req.user.isAdmin) {
+    return next();
+  }
+
+  return res.status(403).json([{ message: "Acces denied. Not authorized" }]);
 };
 
 export const isAdmin = (req, res, next) => {

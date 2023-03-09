@@ -7,6 +7,7 @@ import productsRoutes from "./routes/products.routes.js";
 import userRouter from "./routes/user.routes.js";
 import checkoutRoutes from "./routes/checkout.routes.js";
 import webhookRoutes from "./routes/webhook.routes.js";
+import { userStatsRouter, orderStatsRouter, incomeStatsRouter } from "./routes/stats.routes.js";
 
 const app = express();
 
@@ -42,4 +43,8 @@ app.use("/api/products", productsRoutes);
 app.use("/api", userRouter);
 app.use("/api/checkout", checkoutRoutes);
 app.use("/api/webhook", webhookRoutes);
+app.use("/api/users", userStatsRouter);
+app.use("/api/orders", orderStatsRouter);
+app.use("/api/incomes", incomeStatsRouter);
+
 export default app;

@@ -33,7 +33,7 @@ const userSchema = new Schema(
       unique: true,
     },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 userSchema.statics.hashPassword = async function (password) {
