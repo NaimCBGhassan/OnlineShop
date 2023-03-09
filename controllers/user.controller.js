@@ -7,41 +7,45 @@ import { SECRET_KEY } from "../config.js";
 export const register = async (req, res) => {
   try {
     let customer;
-    let { username, email, password, role } = req.body;
+    let { username, email, password } = req.body;
     MPConfig();
     try {
       const { data } = await MPCreateClient(email);
       customer = data;
     } catch (error) {
       console.log(error);
+      return res.status(400).json([{ message: error.response.data.cause }]);
     }
 
     const user = {
       username,
       email,
       password: await User.hashPassword(password),
-      role,
+      isAdmin: false,
       customerId: customer.id,
     };
 
     let newUser = new User(user);
-    await newUser.save();
+    try {
+      await newUser.save();
+    } catch (error) {
+      console.log(error);
+    }
 
     delete user.password;
 
-    const token = JWT.sign({ ...user, id: newUser._id }, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
+    const token = JWT.sign({ ...user, _id: newUser._id }, SECRET_KEY, { expiresIn: 60 * 60 * 24 * 7 });
 
     return res.json(token);
   } catch (error) {
-    console.log(error);
     if (error.errors) {
       return res.status(400).json(Object.keys(error.errors).map((key) => error.errors[key].properties));
     }
     if (error.message) {
-      return res.status(400).json({ message: error.message });
+      return res.status(400).json([{ message: error.message }]);
     }
 
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json([{ message: "Internal server error" }]);
   }
 };
 
@@ -56,7 +60,7 @@ export const logIn = async (req, res) => {
     logedUser = {
       username,
       email: logedUser.email,
-      role: logedUser.role,
+      isAdmin: logedUser.isAdmin,
       customerId: logedUser.customerId,
       _id: logedUser._id,
     };

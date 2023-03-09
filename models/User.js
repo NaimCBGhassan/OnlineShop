@@ -23,10 +23,9 @@ const userSchema = new Schema(
       required: [true, "Password is required"],
       minLength: [6, "Minimum length is 6"],
     },
-    role: {
-      type: String,
-      required: true,
-      enum: { values: ["User", "Admin"], message: "The role `{VALUE}` doesn't exist" },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     customerId: {
       type: String,

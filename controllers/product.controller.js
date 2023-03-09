@@ -30,10 +30,9 @@ export const createProduct = async (req, res) => {
 
     const createdProduct = new Product({ name, brand, desc, price, image });
     const newProduct = await createdProduct.save();
-    res.json(newProduct);
+    return res.json(newProduct);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Internal server error" });
+    res.status(500).json([{ message: "Internal server error" }]);
   }
 };
 
@@ -46,6 +45,6 @@ export const deleteProduct = async (req, res) => {
 
     return res.sendStatus(204);
   } catch (error) {
-    return res.status(500).send(error.message);
+    return res.status(500).send([{ message: error.message }]);
   }
 };
