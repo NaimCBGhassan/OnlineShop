@@ -1,13 +1,12 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 import axios from "axios";
 
-const baseURL = "/api/products";
-
-const axio = (token = "") =>
-  axios.create({
-    baseURL,
-    headers: { Authorization: token },
-  });
+const token = localStorage.getItem("token");
+const instance = axios.create({
+  baseURL: "/api/products",
+  headers: { Authorization: token },
+});
 
 /* Get products */
 export function useGetProducts() {
@@ -15,7 +14,7 @@ export function useGetProducts() {
     queryKey: ["products"],
     queryFn: async () => {
       try {
-        const res = await axio().get();
+        const res = await instance.get();
         return res.data;
       } catch (error) {
         throw error.response;
@@ -24,5 +23,29 @@ export function useGetProducts() {
     refetchInterval: false,
     refetchOnWindowFocus: false,
     retry: false,
+  });
+}
+
+/* Create Products */
+
+export function useCreateProducts() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ values }) => {
+      try {
+        const form = new FormData();
+        for (let key in values) {
+          form.append(key, values[key]);
+        }
+        const res = await instance.post("/", form);
+        toast.success("Product created succesfully", { position: "bottom-left", autoClose: 1500 });
+        return res.data;
+      } catch (error) {
+        error.response.data.forEach(({ message }) =>
+          toast.error(message, { position: "bottom-left", autoClose: 1500 })
+        );
+      }
+    },
+    onSuccess: () => queryClient.invalidateQueries(["products"]),
   });
 }

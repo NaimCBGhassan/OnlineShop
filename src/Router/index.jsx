@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { ProtectedRoutes } from "../components";
 
 import {
   Layout,
@@ -36,28 +37,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <Dashboard />,
+        element: <ProtectedRoutes />,
         children: [
           {
-            index: true,
-            element: <Summary />,
-          },
-          {
-            path: "summary",
-            element: <Summary />,
-          },
-          {
-            path: "products",
-            element: <Products />,
+            path: "",
+            element: <Dashboard />,
             children: [
               {
-                path: "create-product",
-                element: <CreateProducts />,
+                path: "",
+                element: <Summary />,
+              },
+              {
+                path: "summary",
+                element: <Summary />,
+              },
+              {
+                path: "products",
+                element: <Products />,
+                children: [
+                  {
+                    path: "create-product",
+                    element: <CreateProducts />,
+                  },
+                ],
               },
             ],
           },
         ],
       },
+
       {
         path: "*",
         element: <NotFound />,

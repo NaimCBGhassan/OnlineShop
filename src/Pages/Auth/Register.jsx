@@ -1,12 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import jwt_decode from "jwt-decode";
 
-import Loading from "../assets/svg/Loading.jsx";
-import { useRegister } from "../api/user.js";
+import Loading from "../../assets/svg/Loading.jsx";
+import { useRegister } from "../../api/user.js";
+import { authAction } from "../../store/authSlice.js";
 
 export const Register = () => {
   const [repasswordError, setRepasswordError] = useState(false);
@@ -36,15 +37,16 @@ export const Register = () => {
           password: Yup.string().min(6, "Minimum 6 characters").required("Password is required"),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
+          values.password !== values.repassword ? setRepasswordError(true) : setRepasswordError(false);
+          if (values.password !== values.repassword) return;
           try {
-            if (values.password !== values.repassword) setRepasswordError(true);
-            if (values.password === values.repassword) setRepasswordError(false);
-            values.role = "User";
             const token = await mutateAsync(values);
             const res = jwt_decode(token);
-            dispatch(auth({ ...res, token }));
+            dispatch(authAction({ ...res, token }));
           } catch (error) {
+            console.log(error);
             error.data.forEach(({ message }) => {
+              console.log(message);
               if (message.includes("Username")) setUsernameError({ message });
               if (message.includes("Email")) setEmailError({ message });
             });

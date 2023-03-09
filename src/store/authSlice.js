@@ -5,28 +5,28 @@ const initialState = {
   userId: localStorage.getItem("userId") || "",
   username: localStorage.getItem("username") || "",
   email: localStorage.getItem("email") || "",
-  role: localStorage.getItem("role") || "",
+  isAdmin: JSON.parse(localStorage.getItem("isAdmin")) || false,
   customerId: localStorage.getItem("customerId") || "",
-  userLoaded: localStorage.getItem("userLoaded") || false,
+  userLoaded: JSON.parse(localStorage.getItem("userLoaded")) || false,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    auth(state, action) {
+    authAction(state, action) {
       state.token = action.payload.token;
       state.userId = action.payload._id;
       state.username = action.payload.username;
       state.email = action.payload.email;
-      state.role = action.payload.role;
+      state.isAdmin = action.payload.isAdmin;
       state.customerId = action.payload.customerId;
       state.userLoaded = true;
       localStorage.setItem("token", state.token);
       localStorage.setItem("userId", state.userId);
       localStorage.setItem("username", state.username);
       localStorage.setItem("email", state.email);
-      localStorage.setItem("role", state.role);
+      localStorage.setItem("isAdmin", state.isAdmin);
       localStorage.setItem("customerId", state.customerId);
       localStorage.setItem("userLoaded", state.userLoaded);
     },
@@ -35,17 +35,18 @@ export const authSlice = createSlice({
       state.userId = "";
       state.username = "";
       state.email = "";
-      state.role = "";
+      state.isAdmin = false;
       state.customerId = "";
       state.userLoaded = false;
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("username");
       localStorage.removeItem("email");
+      localStorage.removeItem("isAdmin");
       localStorage.removeItem("customerId");
       localStorage.removeItem("userLoaded");
     },
   },
 });
 
-export const { auth, clearAuth } = authSlice.actions;
+export const { authAction, clearAuth } = authSlice.actions;

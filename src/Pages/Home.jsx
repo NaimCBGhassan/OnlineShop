@@ -20,10 +20,10 @@ export const Home = () => {
   if (products.length === 0)
     return (
       <div className="h-[80vh] grid place-content-center text-center">
-        <p>
+        <div>
           <p>There are not products</p>
           <Empty />
-        </p>
+        </div>
       </div>
     );
 

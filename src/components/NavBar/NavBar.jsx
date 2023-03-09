@@ -14,6 +14,7 @@ const Navbar = styled.nav`
   padding: 0 2rem;
   background-color: #000000;
   position: sticky;
+  z-index: 1;
   top: 0;
   display: flex;
   justify-content: space-between;

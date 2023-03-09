@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import jwt_decode from "jwt-decode";
 
-import Loading from "../assets/svg/Loading.jsx";
-import { useLogin } from "../api/user.js";
-import { auth } from "../store/authSlice";
+import Loading from "../../assets/svg/Loading.jsx";
+import { useLogin } from "../../api/user.js";
+import { authAction } from "../../store/authSlice";
 
 export const LogIn = () => {
   const [usernameError, setUsernameError] = useState(false);
@@ -31,7 +31,7 @@ export const LogIn = () => {
           try {
             const token = await mutateAsync(values);
             const res = jwt_decode(token);
-            dispatch(auth({ ...res, token }));
+            dispatch(authAction({ ...res, token }));
             setSubmitting(false);
             navigate("/cart");
           } catch (error) {

@@ -4,8 +4,10 @@ import { toast } from "react-toastify";
 import { clearAuth } from "../../store/authSlice";
 
 const AuthView = () => {
-  const auth = useSelector((state) => state.auth);
+  const { userLoaded, isAdmin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  console.log(isAdmin);
 
   const handleLogout = () => {
     dispatch(clearAuth());
@@ -13,7 +15,7 @@ const AuthView = () => {
   };
   return (
     <>
-      {!auth.userLoaded ? (
+      {!userLoaded ? (
         <div className="flex gap-2 ">
           <Link to="/login" className="h-full p-2">
             Login
@@ -24,9 +26,11 @@ const AuthView = () => {
         </div>
       ) : (
         <div className="flex gap-2 ">
-          <Link to="/admin" className="h-full p-2">
-            Admin
-          </Link>
+          {isAdmin && (
+            <Link to="/admin" className="h-full p-2">
+              Admin
+            </Link>
+          )}
           <div onClick={handleLogout} className="text-white h-full p-2 cursor-pointer">
             Logout
           </div>

@@ -3,38 +3,69 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Loading from "../../../assets/svg/Loading";
 import { useState } from "react";
+import { PrimaryButton } from "../CommonStyled";
+import { useCreateProducts } from "../../../api/products";
 
 const initialValues = {
-  image: null,
   name: "",
   brand: "",
   desc: "",
   price: "",
+  image: null,
 };
 export const CreateProducts = () => {
+  const [post, setPost] = useState(initialValues);
+
   const [image, setImage] = useState("");
+  const { mutateAsync, isLoading } = useCreateProducts();
 
   return (
     <StyledCreateProduct>
       <Formik
-        initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          console.log(values);
-          console.log(actions);
-          actions.setSubmitting(false);
+        initialValues={post}
+        validationSchema={Yup.object({
+          name: Yup.string().required("Name is required"),
+          brand: Yup.string().required("Brand is required"),
+          desc: Yup.string().required("Description is required"),
+          price: Yup.number().required("Price is required"),
+        })}
+        onSubmit={async (values, actions) => {
+          setPost(values);
+          await mutateAsync({ values });
         }}
       >
         {({ handleSubmit, setFieldValue, isSubmitting }) => (
           <StyledForm>
             <h3>Create a Product</h3>
-            <Field placeholder="Product name" name="name" />
-            <Field placeholder="Brand" name="brand" />
-            <Field placeholder="Description" name="desc" />
-            <Field placeholder="Price" type="number" name="price" />
+            <div className="h-16">
+              <Field placeholder="Product name" name="name" />
+              <ErrorMessage name="name" component="p" className="text-red-600 text-sm" />
+            </div>
+            <div className="h-16">
+              <Field as="select" name="brand" id="brand">
+                <option value="">Select Brand</option>
+                <option value="iphone">iPhone</option>
+                <option value="samsung">Samsung</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="motorola">Motorola</option>
+                <option value="other">Other</option>
+              </Field>
+              <ErrorMessage name="brand" component="p" className="text-red-600 text-sm" />
+            </div>
+            <div className="h-16">
+              <Field placeholder="Description" name="desc" />
+              <ErrorMessage name="desc" component="p" className="text-red-600 text-sm" />
+            </div>
+            <div className="h-16">
+              <Field placeholder="Price" type="number" name="price" />
+              <ErrorMessage name="price" component="p" className="text-red-600 text-sm" />
+            </div>
+
             <input
               type="file"
               name="image"
               accept="image/"
+              required
               onChange={(e) => {
                 const reader = new FileReader();
                 const file = e.target.files[0];
@@ -43,27 +74,29 @@ export const CreateProducts = () => {
                   reader.readAsDataURL(file);
                   reader.onloadend = () => {
                     setImage(reader.result);
-                    setFieldValue("image", file);
                   };
+                  setFieldValue("image", e.target.files[0]);
                 } else {
                   setFieldValue("image", null);
                 }
               }}
             />
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? <Loading className="animate-spin" size={"13px"} /> : "Submit"}
-            </button>
+            <PrimaryButton type="submit" disabled={isSubmitting}>
+              {isLoading ? <Loading className="animate-spin" size={"13px"} /> : "Submit"}
+            </PrimaryButton>
           </StyledForm>
         )}
       </Formik>
-      <ImagePreview>{image ? <img src={image} alt="Product image" /> : <p>The field image is empty</p>}</ImagePreview>
+      <ImagePreview>{image ? <img src={image} alt={post.name} /> : <p>The field image is empty</p>}</ImagePreview>
     </StyledCreateProduct>
   );
 };
 
 const StyledCreateProduct = styled.div`
   display: flex;
-  @media (max-width: 1024px) {
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
     align-items: center;
     flex-direction: column;
   }
@@ -72,13 +105,20 @@ const StyledCreateProduct = styled.div`
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  //width: 80%;
+  align-items: stretch;
+  width: 45%;
   margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
   select,
   input,
   button {
     padding: 7px;
     min-height: 30px;
+    width: 100%;
     outline: none;
     border-radius: 5px;
     border: 1px solid rgb(182, 182, 182);
@@ -90,17 +130,13 @@ const StyledForm = styled(Form)`
   select {
     color: rgb(95, 95, 95);
   }
-
-  input[type="file"] {
-    content: "Rosario";
-  }
 `;
 
 const ImagePreview = styled.div`
   margin: 3.5rem 0 2rem 2rem;
   padding: 2rem;
   border: 1px solid rgb(183, 183, 183);
-  //width: 80%;
+  width: 45%;
   display: grid;
   place-items: center;
   padding: 2rem;
@@ -108,7 +144,8 @@ const ImagePreview = styled.div`
   img {
     //width: 100%;
   }
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     margin: 2rem 0 0 0;
+    width: 90%;
   }
 `;
