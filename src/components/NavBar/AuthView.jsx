@@ -7,8 +7,6 @@ const AuthView = () => {
   const { userLoaded, isAdmin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log(isAdmin);
-
   const handleLogout = () => {
     dispatch(clearAuth());
     toast.warning("Logged out", { position: "bottom-left" });
