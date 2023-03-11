@@ -2,6 +2,19 @@ import Order from "../models/Order.js";
 import moment from "moment";
 import User from "../models/User.js";
 
+/*GET ORDERS */
+export const getOrders = async (req, res) => {
+  const query = req.query.new;
+
+  try {
+    const order = query ? await Order.find().sort({ _id: -1 }).limit(4) : await Order.find().sort({ _id: -1 });
+
+    res.status(200).json({ order });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 /*USER STATS */
 export const userStats = async (req, res) => {
   const previousMonth = moment()
@@ -67,7 +80,7 @@ export const incomeStats = async (req, res) => {
     .format("YYYY-MM-DD HH:mm:ss");
 
   try {
-    const orders = await Order.aggregate([
+    const icomes = await Order.aggregate([
       {
         $match: { createdAt: { $gte: new Date(previousMonth) } },
       },
@@ -81,7 +94,36 @@ export const incomeStats = async (req, res) => {
         },
       },
     ]);
-    return res.status(200).json(orders);
+    return res.status(200).json(icomes);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+/*GET 1 WEEK SALES */
+export const weekSales = async (req, res) => {
+  const last7Days = moment()
+    .day(moment().day() - 6)
+    .format("YYYY-MM-DD HH:mm:ss");
+
+  try {
+    const dailySales = await Order.aggregate([
+      {
+        $match: { createdAt: { $gte: new Date(last7Days) } },
+      },
+      {
+        $project: { day: { $dayOfWeek: "$createdAt" }, sales: "$total" },
+      },
+      {
+        $group: {
+          _id: "$day",
+          totalOrders: { $sum: 1 },
+          total: { $sum: "$sales" },
+        },
+      },
+    ]);
+
+    return res.status(200).json(dailySales);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
