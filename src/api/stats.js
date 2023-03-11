@@ -4,7 +4,7 @@ import axios from "axios";
 
 const token = localStorage.getItem("token");
 const instance = axios.create({
-  baseURL: "/api",
+  baseURL: "/api/stats",
   headers: { Authorization: token },
 });
 
@@ -12,13 +12,26 @@ export function useStats() {
   return useQuery({
     queryKey: ["stats"],
     queryFn: async () => {
-      let { data: users } = await instance.get("/users/stats");
-      let { data: orders } = await instance.get("/orders/stats");
-      let { data: incomes } = await instance.get("/incomes/stats");
-      users = users.sort((a, b) => a.total - b.total);
-      orders = orders.sort((a, b) => a.total - b.total);
-      incomes = incomes.sort((a, b) => a.total - b.total);
-      return { users, orders, incomes };
+      let [users, orders, incomes, weekSales, getOrders] = await Promise.all([
+        instance.get("/users"),
+        instance.get("/orders"),
+        instance.get("/incomes"),
+        instance.get("/weekSales"),
+        instance.get("/getOrders?new=true"),
+      ]).then((results) => results.map((result) => result.data));
+
+      [users, orders, incomes, weekSales].forEach((result) => result.sort((a, b) => a.total - b.total));
+
+      const DAYS = ["Sun", "Mon", "Tue", "Wen", "Thur", "Fri", "Sat"];
+      weekSales = DAYS.map((DAY, index) => {
+        const item = weekSales.find((item) => index === item._id - 1);
+        return {
+          days: DAY,
+          amount: item ? item.total : 0,
+        };
+      });
+
+      return { users, orders, incomes, weekSales, getOrders };
     },
     refetchInterval: false,
     refetchOnWindowFocus: false,

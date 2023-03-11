@@ -11,7 +11,7 @@ export const Home = () => {
     return (
       <div className="h-[80vh] grid place-content-center text-center">
         Loading
-        <Loading />
+        <Loading size={"40px"} />
       </div>
     );
 

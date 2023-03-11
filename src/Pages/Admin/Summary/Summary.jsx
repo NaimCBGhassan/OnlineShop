@@ -3,10 +3,11 @@ import { FaClipboard, FaChartBar, FaUsers } from "react-icons/fa";
 import Widget from "./Widget";
 import { useStats } from "../../../api/stats";
 import Loading from "../../../assets/svg/Loading";
+import Chart from "./Chart";
+import Transactions from "./Transactions";
 
 export const Summary = () => {
   const { data, isLoading } = useStats();
-  console.log(data?.incomes);
 
   const iconsData = [
     {
@@ -54,8 +55,11 @@ export const Summary = () => {
             )}
           </WidgetWrapper>
         </Overview>
+        <Chart weekSales={data?.weekSales} isLoading={isLoading} />
       </MainStats>
-      <SideStats></SideStats>
+      <SideStats>
+        <Transactions getOrders={data?.getOrders} isLoading={isLoading} />
+      </SideStats>
     </StyledSummary>
   );
 };
