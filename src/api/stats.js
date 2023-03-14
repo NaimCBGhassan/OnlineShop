@@ -1,5 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { toast } from "react-toastify";
+import { useQuery } from "react-query";
 import axios from "axios";
 
 const token = localStorage.getItem("token");
@@ -32,6 +31,39 @@ export function useStats() {
       });
 
       return { users, orders, incomes, weekSales, getOrders };
+    },
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+}
+
+export function useGetTotalOrders() {
+  return useQuery({
+    queryKey: ["getTotalOrders"],
+    queryFn: async () => {
+      try {
+        const res = await instance.get("/getOrders");
+        return res.data;
+      } catch (error) {
+        throw error.response;
+      }
+    },
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+}
+export function useTotalIncomes() {
+  return useQuery({
+    queryKey: ["totalIncomes"],
+    queryFn: async () => {
+      try {
+        const res = await instance.get("/totalIncomes");
+        return res.data[0].total;
+      } catch (error) {
+        throw error.response;
+      }
     },
     refetchInterval: false,
     refetchOnWindowFocus: false,

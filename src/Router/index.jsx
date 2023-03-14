@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedRoutes } from "../components";
-
 import {
   Layout,
   NotFound,
@@ -12,6 +11,9 @@ import {
   Products,
   Summary,
   CreateProducts,
+  ProductsList,
+  Orders,
+  Users,
 } from "../Pages/index";
 
 export const router = createBrowserRouter([
@@ -56,10 +58,22 @@ export const router = createBrowserRouter([
                 element: <Products />,
                 children: [
                   {
+                    index: true,
+                    element: <ProductsList />,
+                  },
+                  {
                     path: "create-product",
                     element: <CreateProducts />,
                   },
                 ],
+              },
+              {
+                path: "orders",
+                element: <Orders />,
+              },
+              {
+                path: "users",
+                element: <Users />,
               },
             ],
           },

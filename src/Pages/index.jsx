@@ -8,3 +8,6 @@ export * from "./Admin/Dashboard";
 export * from "./Admin/Summary/Summary";
 export * from "./Admin/Products/Products";
 export * from "./Admin/Products/CreateProducts";
+export * from "./Admin/Products/ProductsList";
+export * from "./Admin/Orders/Orders";
+export * from "./Admin/Users/Users";

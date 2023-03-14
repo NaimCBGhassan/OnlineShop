@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import styled from "styled-components";
+import { FaUsers, FaStore, FaClipboard, FaTachometerAlt } from "react-icons/fa";
 
 export const Dashboard = () => {
   return (
@@ -7,10 +8,16 @@ export const Dashboard = () => {
       <SideNav>
         <h3>Quick Links</h3>
         <NavLink className={({ isActive }) => (isActive ? "link-active" : "link-inactive")} to="/admin/summary">
-          Summary
+          <FaTachometerAlt /> Summary
         </NavLink>
         <NavLink className={({ isActive }) => (isActive ? "link-active" : "link-inactive")} to="/admin/products">
-          Products
+          <FaStore /> Products
+        </NavLink>
+        <NavLink className={({ isActive }) => (isActive ? "link-active" : "link-inactive")} to="/admin/orders">
+          <FaClipboard /> Orders
+        </NavLink>
+        <NavLink className={({ isActive }) => (isActive ? "link-active" : "link-inactive")} to="/admin/users">
+          <FaUsers /> Users
         </NavLink>
       </SideNav>
       <Content>
@@ -43,10 +50,21 @@ const SideNav = styled.div`
   a {
     margin-bottom: 1rem;
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+
+    svg {
+      margin-right: 0.5rem;
+      font-size: 18px;
+    }
   }
 
   .link-active {
     color: #4b70e2;
+    border-left: 3px solid #4b70e2;
+    padding-left: 5px;
+    border-radius: 2px;
   }
   .link-inactive {
     color: rgb(97, 97, 97);

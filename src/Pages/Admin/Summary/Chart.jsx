@@ -8,7 +8,6 @@ const Chart = ({ weekSales, isLoading }) => {
   if (weekSales) {
     weekSales = [...weekSales?.splice(actualDay + 1), ...weekSales?.slice(0, actualDay + 1)];
   }
-  console.log(weekSales);
   return (
     <StyledChart>
       {isLoading ? (

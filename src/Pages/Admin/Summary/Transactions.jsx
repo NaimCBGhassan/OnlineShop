@@ -1,20 +1,25 @@
-import { get } from "mongoose";
 import styled from "styled-components";
+import moment from "moment";
+
+import Loading from "../../../assets/svg/Loading";
 
 const Transactions = ({ getOrders, isLoading }) => {
   return (
     <StyledTransaction>
       {isLoading ? (
-        <p>Transaction loading...</p>
+        <div className="text-center">
+          <Loading size="45px" />
+        </div>
       ) : (
         <>
           <h3>Latest Transactions</h3>
-          {/* {getOrders?.map((order, index) => (
+          {getOrders?.map((order, index) => (
             <Transaction key={index}>
-              <p>Pepe</p>
-              <p>{order.total + USD$}</p>
+              <p>{order.username}</p>
+              <p>${order.total}</p>
+              <p>{moment(order.createdAt).fromNow()}</p>
             </Transaction>
-          ))} */}
+          ))}
         </>
       )}
     </StyledTransaction>

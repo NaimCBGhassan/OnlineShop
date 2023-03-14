@@ -5,6 +5,7 @@ import { useStats } from "../../../api/stats";
 import Loading from "../../../assets/svg/Loading";
 import Chart from "./Chart";
 import Transactions from "./Transactions";
+import AllTimeData from "./AllTimeData";
 
 export const Summary = () => {
   const { data, isLoading } = useStats();
@@ -59,6 +60,7 @@ export const Summary = () => {
       </MainStats>
       <SideStats>
         <Transactions getOrders={data?.getOrders} isLoading={isLoading} />
+        <AllTimeData />
       </SideStats>
     </StyledSummary>
   );
