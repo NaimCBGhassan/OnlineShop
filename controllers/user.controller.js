@@ -72,3 +72,30 @@ export const logIn = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+/* GET USER */
+
+export const getUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let user = await User.findById({ _id: id });
+
+    res.status(200).json({ username: user.username });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json([{ message: "User doesn`t exist" }]);
+  }
+};
+
+/* GET USERS */
+export const getUsers = async (req, res) => {
+  try {
+    let users = await User.find();
+
+    res.status(200).json({ length: users.length });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json([{ message: "Internal server error" }]);
+  }
+};
