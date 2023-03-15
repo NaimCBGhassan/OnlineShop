@@ -13,6 +13,13 @@ export const uploadImage = async (filePath) => {
   });
 };
 
+export const updateImage = async (filePath, public_id) => {
+  const destroyedImage = await cloudinary.uploader.destroy(public_id);
+  if (destroyedImage) {
+    return await cloudinary.uploader.upload(filePath, { invalidate: true });
+  }
+};
+
 export const deleteImage = async (id) => {
   return await cloudinary.uploader.destroy(id);
 };
