@@ -1,23 +1,32 @@
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../../assets/svg/Loading";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PrimaryButton } from "../CommonStyled";
-import { useCreateProducts } from "../../../api/products";
+import { useCreateProducts, useUpdateProducts } from "../../../api/products";
+import { useLayoutEffect } from "react";
 
-const initialValues = {
+let initialValues = {
   name: "",
   brand: "",
   desc: "",
   price: "",
   image: null,
 };
-export const CreateProducts = () => {
-  const [post, setPost] = useState(initialValues);
 
+export const CreateProducts = ({ product, setOpen }) => {
+  if (product) initialValues = product;
+  const [post, setPost] = useState(initialValues);
+  const navigate = useNavigate();
   const [image, setImage] = useState("");
-  const { mutateAsync, isLoading } = useCreateProducts();
+  const createProduct = useCreateProducts();
+  const updateProduct = useUpdateProducts();
+
+  useLayoutEffect(() => {
+    setImage(product?.image.url);
+  }, [initialValues]);
 
   return (
     <StyledCreateProduct>
@@ -30,8 +39,14 @@ export const CreateProducts = () => {
           price: Yup.number().required("Price is required"),
         })}
         onSubmit={async (values, actions) => {
-          setPost(values);
-          await mutateAsync({ values });
+          if (!product) {
+            await createProduct.mutateAsync({ values });
+            navigate("../");
+          } else {
+            await updateProduct.mutateAsync({ values, id: product._id });
+            navigate("./");
+          }
+          setOpen(false);
         }}
       >
         {({ handleSubmit, setFieldValue, isSubmitting }) => (
@@ -44,11 +59,11 @@ export const CreateProducts = () => {
             <div className="h-16">
               <Field as="select" name="brand" id="brand">
                 <option value="">Select Brand</option>
-                <option value="iphone">iPhone</option>
-                <option value="samsung">Samsung</option>
-                <option value="xiaomi">Xiaomi</option>
-                <option value="motorola">Motorola</option>
-                <option value="other">Other</option>
+                <option value="iPhone">iPhone</option>
+                <option value="Samsung">Samsung</option>
+                <option value="Xiaomi">Xiaomi</option>
+                <option value="Motorola">Motorola</option>
+                <option value="Other">Other</option>
               </Field>
               <ErrorMessage name="brand" component="p" className="text-red-600 text-sm" />
             </div>
@@ -82,7 +97,11 @@ export const CreateProducts = () => {
               }}
             />
             <PrimaryButton type="submit" disabled={isSubmitting}>
-              {isLoading ? <Loading className="animate-spin" size={"13px"} /> : "Submit"}
+              {createProduct.isLoading || updateProduct.isLoading ? (
+                <Loading className="animate-spin" size={"13px"} />
+              ) : (
+                "Submit"
+              )}
             </PrimaryButton>
           </StyledForm>
         )}

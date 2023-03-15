@@ -9,5 +9,8 @@ export * from "./Admin/Summary/Summary";
 export * from "./Admin/Products/Products";
 export * from "./Admin/Products/CreateProducts";
 export * from "./Admin/Products/ProductsList";
+export * from "./Admin/Products/Product";
 export * from "./Admin/Orders/Orders";
+export * from "./Admin/Orders/Order";
 export * from "./Admin/Users/Users";
+export * from "./Admin/Users/User";

@@ -11,9 +11,12 @@ import {
   Products,
   Summary,
   CreateProducts,
+  Product,
   ProductsList,
   Orders,
   Users,
+  Order,
+  User,
 } from "../Pages/index";
 
 export const router = createBrowserRouter([
@@ -36,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <LogIn />,
+      },
+      {
+        path: "/product/:id",
+        element: <Product />,
       },
       {
         path: "/admin",
@@ -65,6 +72,10 @@ export const router = createBrowserRouter([
                     path: "create-product",
                     element: <CreateProducts />,
                   },
+                  {
+                    path: "product/:id",
+                    element: <Product />,
+                  },
                 ],
               },
               {
@@ -72,8 +83,16 @@ export const router = createBrowserRouter([
                 element: <Orders />,
               },
               {
+                path: "order/:id",
+                element: <Order />,
+              },
+              {
                 path: "users",
                 element: <Users />,
+              },
+              {
+                path: "user/:id",
+                element: <User />,
               },
             ],
           },

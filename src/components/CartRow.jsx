@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { removeToCart, addToCart, decrementOne } from "../store/cartSlice";
 
 export const CartRow = ({ item }) => {
@@ -18,7 +19,9 @@ export const CartRow = ({ item }) => {
       <article className="flex items-center my-4 font-normal">
         <div className="w-[35%] flex">
           <div className="w-[40%] h-[8vw] hidden md:inline">
-            <img src={item.image.url} alt={item.name} className="h-[100%]" />
+            <Link to={`/product/${item._id}`}>
+              <img src={item.image.url} alt={item.name} className="h-[100%]" />
+            </Link>
           </div>
           <div>
             <p className="text-base">{item.name}</p>
