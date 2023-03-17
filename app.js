@@ -7,7 +7,7 @@ import productsRoutes from "./routes/products.routes.js";
 import userRouter from "./routes/user.routes.js";
 import checkoutRoutes from "./routes/checkout.routes.js";
 import webhookRoutes from "./routes/webhook.routes.js";
-import statsRoutes from "./routes/Stats.routes.js";
+import statsRoutes from "./routes/stats.routes.js";
 
 const app = express();
 
