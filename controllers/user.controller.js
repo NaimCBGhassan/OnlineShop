@@ -1,20 +1,17 @@
 import JWT from "jsonwebtoken";
 
 import User from "../models/User.js";
-import { MPConfig, MPCreateClient, MPGetClient } from "../libs/mercadopago.js";
 import { SECRET_KEY } from "../config.js";
 
 export const register = async (req, res) => {
   try {
-    let customer;
     let { username, email, password } = req.body;
 
     const user = {
       username,
       email,
       password: await User.hashPassword(password),
-      isAdmin: false,
-      customerId: customer.id,
+      isAdmin: true,
     };
 
     let newUser = new User(user);
@@ -30,6 +27,7 @@ export const register = async (req, res) => {
 
     return res.json(token);
   } catch (error) {
+    console.log(error);
     if (error.errors) {
       return res.status(400).json(Object.keys(error.errors).map((key) => error.errors[key].properties));
     }
@@ -53,7 +51,6 @@ export const logIn = async (req, res) => {
       username,
       email: logedUser.email,
       isAdmin: logedUser.isAdmin,
-      customerId: logedUser.customerId,
       _id: logedUser._id,
     };
 
