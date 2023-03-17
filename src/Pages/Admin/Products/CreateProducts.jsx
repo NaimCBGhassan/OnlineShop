@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../assets/svg/Loading";
 import { useState, useEffect } from "react";
-import { PrimaryButton } from "../CommonStyled";
+import { PrimaryButton } from "./CommonStyled";
 import { useCreateProducts, useUpdateProducts } from "../../../api/products";
 import { useLayoutEffect } from "react";
 

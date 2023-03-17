@@ -9,25 +9,24 @@ import AllTimeData from "./AllTimeData";
 
 export const Summary = () => {
   const { data, isLoading } = useStats();
-
   const iconsData = [
     {
       icon: <FaUsers />,
-      digits: data?.users[1].total,
+      digits: data?.users.length === 1 ? data?.users[0].total : data?.users[1].total,
       isMoney: false,
       title: "Users",
       color: "rgb(102,108,255)",
       bgColor: "rgba(102,108,255,0.12)",
-      percentage: (data?.users[1].total / data?.users[0].total) * 100 - 100,
+      percentage: data?.users.length === 1 ? Infinity : (data?.users[1].total / data?.users[0].total) * 100 - 100,
     },
     {
       icon: <FaClipboard />,
-      digits: data?.orders[1].total,
+      digits: data?.orders.length === 1 ? data?.orders[0].total : data?.orders[1].total,
       isMoney: false,
       title: "Orders",
       color: "rgb(38,198,249)",
       bgColor: "rgba(38,198,249,0.12)",
-      percentage: (data?.orders[1].total / data?.orders[0].total) * 100 - 100,
+      percentage: data?.orders.length === 1 ? Infinity : (data?.orders[1].total / data?.orders[0].total) * 100 - 100,
     },
     {
       icon: <FaChartBar />,

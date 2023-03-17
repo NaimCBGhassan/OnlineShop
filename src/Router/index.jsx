@@ -13,8 +13,8 @@ import {
   CreateProducts,
   Product,
   ProductsList,
-  Orders,
-  Users,
+  UsersList,
+  OrdersList,
   Order,
   User,
 } from "../Pages/index";
@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "orders",
-                element: <Orders />,
+                element: <OrdersList />,
               },
               {
                 path: "order/:id",
@@ -88,7 +88,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "users",
-                element: <Users />,
+                element: <UsersList />,
               },
               {
                 path: "user/:id",

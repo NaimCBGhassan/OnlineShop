@@ -1,5 +1,6 @@
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const token = localStorage.getItem("token");
 const instance = axios.create({
@@ -54,6 +55,44 @@ export function useGetTotalOrders() {
     retry: false,
   });
 }
+
+export function useGetTotalOrder(id) {
+  return useQuery({
+    queryKey: ["getTotalOrder"],
+    queryFn: async () => {
+      try {
+        const res = await instance.get(`/getOrder/${id}`);
+        return res.data;
+      } catch (error) {
+        throw error.response;
+      }
+    },
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+}
+
+export function useUpdateOrder() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ values, id }) => {
+      try {
+        const res = await instance.put(`/editOrder/${id}`, { deliveryStatus: values });
+
+        toast.success("Order updated succesfully", { position: "bottom-left", autoClose: 1500 });
+        return res.data;
+      } catch (error) {
+        console.log(error);
+        error.response.data.forEach(({ message }) =>
+          toast.error(message, { position: "bottom-left", autoClose: 1500 })
+        );
+      }
+    },
+    onSuccess: () => queryClient.invalidateQueries(["getTotalOrders"]),
+  });
+}
+
 export function useTotalIncomes() {
   return useQuery({
     queryKey: ["totalIncomes"],

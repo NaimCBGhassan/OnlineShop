@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useGetProduct } from "../../../api";
 import { addToCart } from "../../../store/cartSlice";
 import Loading from "../../../assets/svg/Loading";
-import { PrimaryButton } from "../CommonStyled";
+import { PrimaryButton } from "./CommonStyled";
 
 export const Product = () => {
   const params = useParams();

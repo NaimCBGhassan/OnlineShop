@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import * as React from "react";
 import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
@@ -71,14 +70,7 @@ export function ProductsList() {
 
   return (
     <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
+      <DataGrid rows={rows} columns={columns} pageSize={5} rowsPerPageOptions={[5]} disableRowSelectionOnClick />
       {open ? <EditProduct open={open} setOpen={setOpen} product={product} setProduct={setProduct} /> : null}
     </div>
   );

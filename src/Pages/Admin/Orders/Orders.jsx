@@ -1,17 +1,6 @@
 import styled from "styled-components";
-import OredersList from "./OredersList";
+import OredersList from "./OrdersList";
 
 export const Orders = () => {
-  return (
-    <div>
-      {product.map((procut) => (
-        <div>{procut}</div>
-      ))}
-      <OredersList />
-    </div>
-  );
+  return <OredersList />;
 };
-
-const View = styled.button`
-  background-color: rgb(114, 225, 40);
-`;
