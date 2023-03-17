@@ -76,12 +76,10 @@ export const logIn = async (req, res) => {
 /* GET USER */
 
 export const getUser = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    let user = await User.findById({ _id: id });
+    let { username, email, _id, isAdmin } = await User.findById(req.params.id);
 
-    res.status(200).json({ username: user.username });
+    res.status(200).json({ username, email, _id, isAdmin });
   } catch (error) {
     console.log(error);
     res.status(404).json([{ message: "User doesn`t exist" }]);
@@ -93,7 +91,50 @@ export const getUsers = async (req, res) => {
   try {
     let users = await User.find();
 
-    res.status(200).json({ length: users.length });
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json([{ message: "Internal server error" }]);
+  }
+};
+
+/* UPDATE USER */
+
+export const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!(user.username === req.body.username)) {
+      const usernameInUse = await User.findOne({ username: req.body.username });
+      if (usernameInUse) return res.status(400).json([{ message: "The username is already taken" }]);
+    }
+
+    if (!(user.email === req.body.email)) {
+      const emailInUse = await User.findOne({ email: req.body.email });
+      if (emailInUse) return res.status(400).json([{ message: "The email is already taken" }]);
+    }
+
+    if (req.body.password && user) {
+      user.password = await User.hashPassword(req.body.password);
+    }
+
+    /* const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      username: req.body.username,
+      email: req.body.email,
+    }); */
+
+    res.status(200).json(userUpdated);
+  } catch (error) {
+    res.status(404).json([{ message: "User doesn`t exist" }]);
+  }
+};
+
+/* DELETE USER */
+export const deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+
+    res.status(204).json({});
   } catch (error) {
     console.log(error);
     res.status(404).json([{ message: "Internal server error" }]);

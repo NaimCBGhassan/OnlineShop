@@ -34,6 +34,25 @@ export const getOrders = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+/*GET ORDERS */
+export const getOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    res.status(200).json(order);
+  } catch (error) {
+    return res.status(500).json([{ message: "Internal server error" }]);
+  }
+};
+
+/*EDIT ORDER */
+export const editOrder = async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.status(200).json(updatedOrder);
+  } catch (error) {
+    return res.status(500).json([{ message: "Internal server error" }]);
+  }
+};
 
 /*USER STATS */
 export const userStats = async (req, res) => {
