@@ -84,6 +84,7 @@ export function useUpdateUser() {
         toast.success("User updated succesfully", { position: "bottom-left", autoClose: 1500 });
         return res.data;
       } catch (error) {
+        console.log(error.response);
         error.response.data.forEach(({ message }) =>
           toast.error(message, { position: "bottom-left", autoClose: 1500 })
         );

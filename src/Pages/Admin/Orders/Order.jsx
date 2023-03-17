@@ -19,10 +19,10 @@ export const Order = () => {
               Delivery status:
               {order.deliveryStatus === "pending" ? (
                 <Pending>Pending</Pending>
-              ) : order.deliveryStatus === "despatched" ? (
+              ) : order.deliveryStatus === "dispatched" ? (
                 <Dispatched>Dispatched</Dispatched>
               ) : order.deliveryStatus === "delivered" ? (
-                <Delivered>Dispatched</Delivered>
+                <Delivered>Delivered</Delivered>
               ) : (
                 "Error"
               )}

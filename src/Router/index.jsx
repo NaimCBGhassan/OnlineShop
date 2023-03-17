@@ -17,6 +17,7 @@ import {
   OrdersList,
   Order,
   User,
+  CheckoutSucces,
 } from "../Pages/index";
 
 export const router = createBrowserRouter([
@@ -32,6 +33,11 @@ export const router = createBrowserRouter([
         path: "/cart",
         element: <Cart />,
       },
+      {
+        path: "/checkoutSuccess",
+        element: <CheckoutSucces />,
+      },
+
       {
         path: "/register",
         element: <Register />,
