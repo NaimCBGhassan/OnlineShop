@@ -27,11 +27,6 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    customerId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
   },
   { versionKey: false, timestamps: true }
 );

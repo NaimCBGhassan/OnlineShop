@@ -8,14 +8,6 @@ export const register = async (req, res) => {
   try {
     let customer;
     let { username, email, password } = req.body;
-    MPConfig();
-    try {
-      const { data } = await MPCreateClient(email);
-      customer = data;
-    } catch (error) {
-      console.log(error);
-      return res.status(400).json([{ message: error.response.data.cause }]);
-    }
 
     const user = {
       username,
@@ -101,6 +93,7 @@ export const getUsers = async (req, res) => {
 /* UPDATE USER */
 
 export const updateUser = async (req, res) => {
+  console.log(req.body.isAdmin);
   try {
     const user = await User.findById(req.params.id);
 
@@ -118,14 +111,27 @@ export const updateUser = async (req, res) => {
       user.password = await User.hashPassword(req.body.password);
     }
 
-    /* const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        username: req.body.username,
+        email: req.body.email,
+        password: user.password,
+        isAdmin: req.body.isAdmin,
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      _id: updatedUser._id,
       username: req.body.username,
       email: req.body.email,
-    }); */
-
-    res.status(200).json(userUpdated);
+      isAdmin: req.body.isAdmin,
+    });
   } catch (error) {
-    res.status(404).json([{ message: "User doesn`t exist" }]);
+    res.status(500).json([{ message: "Internal server error" }]);
   }
 };
 

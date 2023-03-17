@@ -6,12 +6,6 @@ export const createPayment = async (req, res) => {
   const { cartItems, auth } = req.body;
   MPConfig();
 
-  try {
-    await MPUpdateClient({ cartItems, auth });
-  } catch (error) {
-    console.log(error);
-  }
-
   const preference = {
     binary_mode: true,
     items: cartItems.map((item) => {
@@ -31,7 +25,7 @@ export const createPayment = async (req, res) => {
     },
 
     back_urls: {
-      success: "http://localhost:5173",
+      success: "http://localhost:5173/checkoutSuccess",
       failure: "http://localhost:5173",
       pending: "http://localhost:5173",
     },
@@ -39,7 +33,6 @@ export const createPayment = async (req, res) => {
     metadata: {
       userId: auth.userId,
       username: auth.username,
-      customerId: auth.customerId,
     },
   };
 

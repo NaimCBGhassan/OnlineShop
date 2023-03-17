@@ -10,9 +10,6 @@ const orderSchema = new Schema(
       type: String,
       required: true,
     },
-    customerId: {
-      type: String,
-    },
     paymentIntentId: {
       type: String,
     },
