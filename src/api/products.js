@@ -49,12 +49,13 @@ export function useCreateProducts() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ values }) => {
+      const token = localStorage.getItem("token");
       try {
         const form = new FormData();
         for (let key in values) {
           form.append(key, values[key]);
         }
-        const res = await instance.post("/", form);
+        const res = await instance.post("/", form, { headers: { Authorization: token } });
         toast.success("Product created succesfully", { position: "bottom-left", autoClose: 1500 });
         return res.data;
       } catch (error) {
@@ -73,12 +74,13 @@ export function useUpdateProducts() {
   return useMutation({
     mutationFn: async ({ values, id }) => {
       if (!id) return;
+      const token = localStorage.getItem("token");
       try {
         const form = new FormData();
         for (let key in values) {
           form.append(key, values[key]);
         }
-        const res = await instance.put(`/${id}`, form);
+        const res = await instance.put(`/${id}`, form, { headers: { Authorization: token } });
         toast.success("Product updated succesfully", { position: "bottom-left", autoClose: 1500 });
         return res.data;
       } catch (error) {
@@ -96,8 +98,9 @@ export function useDeleteProducts() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id) => {
+      const token = localStorage.getItem("token");
       try {
-        const res = await instance.delete(`${id}`);
+        const res = await instance.delete(`${id}`, { headers: { Authorization: token } });
         toast.error("Product deleted succesfully", { position: "bottom-left", autoClose: 1500 });
         return res.data;
       } catch (error) {
