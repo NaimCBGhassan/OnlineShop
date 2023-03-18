@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "https://onlineshopmernproject.netlify.app/api/*"
+  to = "https://onlineshop-project.up.railway.app/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
