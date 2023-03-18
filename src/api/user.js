@@ -2,11 +2,13 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
-const token = localStorage.getItem("token");
-const instance = axios.create({
-  baseURL: "/api",
-  headers: { Authorization: token },
-});
+const instances = (token) =>
+  axios.create({
+    baseURL: "/api",
+    headers: { Authorization: token },
+  });
+
+let instance = instances();
 
 /*REGISTER */
 export function useRegister() {
@@ -20,6 +22,10 @@ export function useRegister() {
         throw error.response;
       }
     },
+    onSuccess: () => {
+      const token = localStorage.getItem("token");
+      instance = instances(token);
+    },
   });
 }
 
@@ -32,8 +38,13 @@ export function useLogin() {
         localStorage.setItem("token", res.data);
         return res.data;
       } catch (error) {
+        console.log(error.response);
         throw error.response;
       }
+    },
+    onSuccess: () => {
+      const token = localStorage.getItem("token");
+      instance = instances(token);
     },
   });
 }
@@ -43,6 +54,8 @@ export function useGetUser(id) {
   return useQuery({
     queryKey: ["user"],
     queryFn: async () => {
+      const token = localStorage.getItem("token");
+      instance = instances(token);
       try {
         const res = await instance.get(`/user/${id}`);
         return res.data;
@@ -61,6 +74,8 @@ export function useGetUsers() {
   return useQuery({
     queryKey: ["users"],
     queryFn: async () => {
+      const token = localStorage.getItem("token");
+      instance = instances(token);
       try {
         const res = await instance.get(`/users`);
         return res.data;

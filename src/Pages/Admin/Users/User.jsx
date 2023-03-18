@@ -19,6 +19,7 @@ export const User = () => {
         ) : (
           <Formik
             initialValues={user}
+            enableReinitialize={true}
             validationSchema={Yup.object({
               username: Yup.string().min(6, "Minimum 6 characters").required("Username is required"),
               email: Yup.string().required("Email is required").email("Invalid email"),

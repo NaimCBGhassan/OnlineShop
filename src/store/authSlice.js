@@ -20,14 +20,12 @@ export const authSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.isAdmin = action.payload.isAdmin;
-      state.customerId = action.payload.customerId;
       state.userLoaded = true;
       localStorage.setItem("token", state.token);
       localStorage.setItem("userId", state.userId);
       localStorage.setItem("username", state.username);
       localStorage.setItem("email", state.email);
       localStorage.setItem("isAdmin", state.isAdmin);
-      localStorage.setItem("customerId", state.customerId);
       localStorage.setItem("userLoaded", state.userLoaded);
     },
     clearAuth(state, action) {
@@ -36,14 +34,12 @@ export const authSlice = createSlice({
       state.username = "";
       state.email = "";
       state.isAdmin = false;
-      state.customerId = "";
       state.userLoaded = false;
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("username");
       localStorage.removeItem("email");
       localStorage.removeItem("isAdmin");
-      localStorage.removeItem("customerId");
       localStorage.removeItem("userLoaded");
     },
   },

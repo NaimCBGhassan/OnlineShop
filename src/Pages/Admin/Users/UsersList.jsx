@@ -7,7 +7,6 @@ import EditProduct from "../Products/EditProduct";
 import { useDeleteUser, useGetUsers } from "../../../api/user";
 
 export function UsersList() {
-  const [user, setUsers] = useState(false);
   const { data: users = [], isLoading } = useGetUsers();
   const deleteUser = useDeleteUser();
   const navigate = useNavigate();
@@ -37,15 +36,19 @@ export function UsersList() {
       width: 130,
       renderCell: (params) => (
         <Actions>
-          <Delete
-            onClick={() => {
-              deleteUser.mutateAsync(params.row.id);
-            }}
-            disabled={isLoading}
-          >
-            Delete
-          </Delete>
-          <View onClick={() => navigate(`../user/${params.row.id}`)}>View</View>
+          {!(params.row.uName === "Admin1") ? (
+            <>
+              <Delete
+                onClick={() => {
+                  deleteUser.mutateAsync(params.row.id);
+                }}
+                disabled={isLoading}
+              >
+                Delete
+              </Delete>
+              <View onClick={() => navigate(`../user/${params.row.id}`)}>View</View>
+            </>
+          ) : null}
         </Actions>
       ),
     },

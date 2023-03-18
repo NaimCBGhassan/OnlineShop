@@ -2,16 +2,20 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const token = localStorage.getItem("token");
-const instance = axios.create({
-  baseURL: "/api/stats",
-  headers: { Authorization: token },
-});
+const instances = (token) =>
+  axios.create({
+    baseURL: "/api/stats",
+    headers: { Authorization: token },
+  });
+
+let instance = instances();
 
 export function useStats() {
   return useQuery({
     queryKey: ["stats"],
     queryFn: async () => {
+      const token = localStorage.getItem("token");
+      instance = instances(token);
       let [users, orders, incomes, weekSales, getOrders] = await Promise.all([
         instance.get("/users"),
         instance.get("/orders"),
@@ -43,6 +47,8 @@ export function useGetTotalOrders() {
   return useQuery({
     queryKey: ["getTotalOrders"],
     queryFn: async () => {
+      const token = localStorage.getItem("token");
+      instance = instances(token);
       try {
         const res = await instance.get("/getOrders");
         return res.data;
@@ -97,6 +103,8 @@ export function useTotalIncomes() {
   return useQuery({
     queryKey: ["totalIncomes"],
     queryFn: async () => {
+      const token = localStorage.getItem("token");
+      const instance = instances(token);
       try {
         const res = await instance.get("/totalIncomes");
         return res.data[0].total;

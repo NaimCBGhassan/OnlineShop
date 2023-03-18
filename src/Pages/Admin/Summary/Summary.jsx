@@ -12,30 +12,54 @@ export const Summary = () => {
   const iconsData = [
     {
       icon: <FaUsers />,
-      digits: data?.users.length === 1 ? data?.users[0].total : data?.users[1].total,
+      digits: (() => {
+        if (data?.users.length === 0) return 0;
+        if (data?.users.length === 1) return data?.users[0].total;
+        return data?.users[1].total;
+      })(),
       isMoney: false,
       title: "Users",
       color: "rgb(102,108,255)",
       bgColor: "rgba(102,108,255,0.12)",
-      percentage: data?.users.length === 1 ? Infinity : (data?.users[1].total / data?.users[0].total) * 100 - 100,
+      percentage: (() => {
+        if (data?.users.length === 0) return 0;
+        if (data?.users.length === 1) return Infinity;
+        return (data?.users[1].total / data?.users[0].total) * 100 - 100;
+      })(),
     },
     {
       icon: <FaClipboard />,
-      digits: data?.orders.length === 1 ? data?.orders[0].total : data?.orders[1].total,
+      digits: (() => {
+        if (data?.orders.length === 0) return 0;
+        if (data?.orders.length === 1) return data?.orders[0].total;
+        return data?.orders[1].total;
+      })(),
       isMoney: false,
       title: "Orders",
       color: "rgb(38,198,249)",
       bgColor: "rgba(38,198,249,0.12)",
-      percentage: data?.orders.length === 1 ? Infinity : (data?.orders[1].total / data?.orders[0].total) * 100 - 100,
+      percentage: (() => {
+        if (data?.orders.length === 0) return 0;
+        if (data?.orders.length === 1) return Infinity;
+        return (data?.orders[1].total / data?.orders[0].total) * 100 - 100;
+      })(),
     },
     {
       icon: <FaChartBar />,
-      digits: data?.incomes[1].total,
+      digits: (() => {
+        if (data?.incomes.length === 0) return 0;
+        if (data?.incomes.length === 1) return data?.incomes[0].total;
+        return data?.incomes[1].total;
+      })(),
       isMoney: true,
       title: "Earning",
       color: "rgb(253,181,40)",
       bgColor: "rgba(253,181,40,0.12)",
-      percentage: (data?.incomes[1].total / data?.incomes[0].total) * 100 - 100,
+      percentage: (() => {
+        if (data?.incomes.length === 0) return 0;
+        if (data?.incomes.incomeslength === 1) return Infinity;
+        return (data?.incomes[1].total / data?.incomes[0].total) * 100 - 100;
+      })(),
     },
   ];
 
