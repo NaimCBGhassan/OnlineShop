@@ -1,6 +1,7 @@
 import mercadopago from "mercadopago";
+import { SERVER_HOST } from "../config.js";
 
-import { MPConfig, MPUpdateClient } from "../libs/mercadopago.js";
+import { MPConfig } from "../libs/mercadopago.js";
 
 export const createPayment = async (req, res) => {
   const { cartItems, auth } = req.body;
@@ -25,8 +26,8 @@ export const createPayment = async (req, res) => {
     },
 
     back_urls: {
-      success: "http://localhost:5173/checkoutSuccess",
-      failure: "http://localhost:5173",
+      success: `${SERVER_HOST}/checkoutSuccess`,
+      failure: `${SERVER_HOST}`,
       pending: "http://localhost:5173",
     },
     auto_return: "approved",

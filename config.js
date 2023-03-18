@@ -3,6 +3,7 @@ dotenv.config();
 
 export const PORT = process.env.PORT;
 export const MONGODB_URI = process.env.MONGODB_URI;
+export const SERVER_HOST = process.env.SERVER_HOST;
 
 export const cloud_name = process.env.cloud_name;
 export const api_key = process.env.api_key;
