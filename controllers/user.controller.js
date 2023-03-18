@@ -11,7 +11,7 @@ export const register = async (req, res) => {
       username,
       email,
       password: await User.hashPassword(password),
-      isAdmin: true,
+      isAdmin: false,
     };
 
     let newUser = new User(user);
