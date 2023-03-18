@@ -57,7 +57,7 @@ export const Summary = () => {
       bgColor: "rgba(253,181,40,0.12)",
       percentage: (() => {
         if (data?.incomes.length === 0) return 0;
-        if (data?.incomes.incomeslength === 1) return Infinity;
+        if (data?.incomes.length === 1) return Infinity;
         return (data?.incomes[1].total / data?.incomes[0].total) * 100 - 100;
       })(),
     },
