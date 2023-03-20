@@ -1,5 +1,5 @@
 # Online store
-[Online store](https://tiendaonlinemernproject.netlify.app)](https://tiendaonlinemernproject.netlify.app)
+[https://onlineshopmernproject.netlify.app/](https://onlineshopmernproject.netlify.app/)
 
 The project was developed thinking of two folders (Client and Server). In addition, there are two branches that represent these two folders, and you can visit them.
 
