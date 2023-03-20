@@ -24,9 +24,10 @@ export const CheckoutSucces = () => {
 };
 
 const Container = styled.div`
+  text-align: center;
   min-height: 80vh;
   max-width: 800px;
-  width: 100%;
+  width: 80%;
   margin: auto;
   display: flex;
   flex-direction: column;

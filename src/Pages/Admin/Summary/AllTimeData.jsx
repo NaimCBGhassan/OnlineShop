@@ -68,6 +68,7 @@ const Main = styled.div`
   background-color: rgb(48, 51, 78);
   color: rgba(234, 234, 255, 0.87);
   margin-top: 1.5rem;
+  margin-bottom: 8rem;
   border-radius: 5px;
   padding: 1rem;
   font-size: 14px;

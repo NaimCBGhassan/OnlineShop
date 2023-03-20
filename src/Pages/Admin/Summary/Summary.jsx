@@ -92,11 +92,19 @@ export const Summary = () => {
 const StyledSummary = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  @media (min-width: 1064px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const MainStats = styled.div`
-  flex: 2;
   width: 100%;
+  @media (min-width: 1064px) {
+    width: 66%;
+  }
 `;
 
 const Title = styled.div`
@@ -111,7 +119,6 @@ const Overview = styled.div`
   color: rgba(234, 234, 255, 0.87);
   width: 100%;
   padding: 1.5rem;
-  height: 170px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -120,14 +127,22 @@ const Overview = styled.div`
 
 const WidgetWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  gap: 1rem;
   width: 100%;
-  justify-content: space-between;
+  @media (min-width: 1064px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const SideStats = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
   width: 100%;
+  @media (min-width: 1064px) {
+    width: 34%;
+    margin-left: 2rem;
+  }
 `;

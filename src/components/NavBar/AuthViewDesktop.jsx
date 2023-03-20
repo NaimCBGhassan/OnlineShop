@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearAuth } from "../../store/authSlice";
 
-const AuthView = () => {
+const AuthViewDesktop = () => {
   const { userLoaded, isAdmin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -38,4 +38,4 @@ const AuthView = () => {
   );
 };
 
-export default AuthView;
+export default AuthViewDesktop;
