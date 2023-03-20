@@ -75,23 +75,26 @@ export const User = () => {
 };
 
 const StyledUser = styled.div`
-  margin: 3rem;
+  margin: 0 -2rem;
   display: flex;
   justify-content: center;
+  @media (min-width: 1068px) {
+    margin: 3rem;
+  }
 `;
 
 const UserContainer = styled.div`
   max-width: 500px;
-  width: 100%;
+  width: 80%;
   display: flex;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(100, 100, 111, 0.7) 0px 7px 29px 0px;
   border-radius: 5px;
   padding: 2rem;
   form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 45%;
+    width: 100%;
   }
   h3 {
     margin-bottom: 0.5rem;

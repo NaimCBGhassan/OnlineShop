@@ -38,7 +38,7 @@ export const Product = () => {
                 <span>Description: {product.desc}</span>
               </p>
               <Price>${product.price}</Price>
-              <PrimaryButton className="w-[60%] h-[20%]" onClick={() => handleAddToCart(product)}>
+              <PrimaryButton className="w-full h-[20%]" onClick={() => handleAddToCart(product)}>
                 Add To Cart
               </PrimaryButton>
             </ProductDetails>
@@ -50,19 +50,26 @@ export const Product = () => {
 };
 
 const StyledProduct = styled.div`
-  margin: 3rem;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  @media (min-width: 1068px) {
+    margin: 3rem;
+  }
 `;
 
 const ProductsContainer = styled.div`
   max-width: 500px;
   width: 100%;
-  height: auto;
   display: flex;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  flex-direction: column;
+  box-shadow: rgba(100, 100, 111, 0.7) 0px 7px 29px 0px;
   border-radius: 5px;
   padding: 2rem;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    margin: 3rem;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -74,9 +81,12 @@ const ImageContainer = styled.div`
 
 const ProductDetails = styled.div`
   flex: 2;
-  margin-left: 2rem;
+
+  @media (min-width: 768px) {
+    margin-left: 2rem;
+  }
   h3 {
-    font-size: 35px;
+    font-size: 25px;
   }
   p span {
     font-weight: bold;

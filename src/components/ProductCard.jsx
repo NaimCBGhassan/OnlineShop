@@ -36,14 +36,14 @@ export const ProductCard = ({ product }) => {
 
   return (
     <Card>
+      <h3 className="text-[25px] font-normal">{name}</h3>
       <Link to={`/product/${id}`}>
-        <h3 className="text-[25px] font-normal">{name}</h3>
         <img src={image.url} alt={name} className="h-[220px] object-cover object-center" />
-        <div className="self-stretch flex justify-between items-center text-[20px] font-bold">
-          <span>{desc}</span>
-          <span>${price}</span>
-        </div>
       </Link>
+      <div className="self-stretch flex justify-between items-center text-[20px] font-bold">
+        <span>{desc}</span>
+        <span>${price}</span>
+      </div>
       <button
         className="w-full h-[40px] mt-[1rem] font-normal rounded bg-[#4b70e2] hover:bg-[#4baaee] text-white tracking-widest"
         onClick={() => {
