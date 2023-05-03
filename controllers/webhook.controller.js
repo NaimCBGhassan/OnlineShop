@@ -10,6 +10,7 @@ const axiosWebhook = axios.create({
 });
 
 const createOrder = async (paymentData) => {
+  console.log("first");
   const newOrder = new Order({
     userId: paymentData.metadata.user_id,
     username: paymentData.metadata.username,
@@ -33,9 +34,16 @@ export const webhook = async (req, res) => {
 
   try {
     paymentData = await axiosWebhook.get(`/${req.body.data.id}`);
+    const orders = await Order.find({ paymentIntentId: paymentData.data.id });
+
+    if (orders?.length !== 0) {
+      res.status(200).json([{ message: "The order already exist" }]);
+      return;
+    }
+
     console.log("Solicitud de pago exiotosa");
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.message);
     return res.status(500).send(`Webhokk Error: ${error.message}`);
   }
 
@@ -43,5 +51,5 @@ export const webhook = async (req, res) => {
     createOrder(paymentData.data);
   }
 
-  return res.status(200);
+  return res.status(200).json([{ message: "Successful payment" }]);
 };
