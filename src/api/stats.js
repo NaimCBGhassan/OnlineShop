@@ -24,7 +24,7 @@ export function useStats() {
         instance.get("/getOrders?new=true"),
       ]).then((results) => results.map((result) => result.data));
 
-      [users, orders, incomes, weekSales].forEach((result) => result.sort((a, b) => a.total - b.total));
+      [users, orders, incomes, weekSales].forEach((result) => result.sort((a, b) => a._id - b._id));
 
       const DAYS = ["Sun", "Mon", "Tue", "Wen", "Thur", "Fri", "Sat"];
       weekSales = DAYS.map((DAY, index) => {

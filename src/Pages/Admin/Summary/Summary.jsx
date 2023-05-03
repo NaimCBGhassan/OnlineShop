@@ -14,7 +14,9 @@ export const Summary = () => {
       icon: <FaUsers />,
       digits: (() => {
         if (data?.users.length === 0) return 0;
-        if (data?.users.length === 1) return data?.users[0].total;
+        if (data?.users.length === 1) {
+          return data.users[0].isActualMonth ? data?.users[0].total : 0;
+        }
         return data?.users[1].total;
       })(),
       isMoney: false,
@@ -23,7 +25,9 @@ export const Summary = () => {
       bgColor: "rgba(102,108,255,0.12)",
       percentage: (() => {
         if (data?.users.length === 0) return 0;
-        if (data?.users.length === 1) return Infinity;
+        if (data?.users.length === 1) {
+          return data.users[0].isActualMonth ? Infinity : 0;
+        }
         return (data?.users[1].total / data?.users[0].total) * 100 - 100;
       })(),
     },
@@ -31,7 +35,9 @@ export const Summary = () => {
       icon: <FaClipboard />,
       digits: (() => {
         if (data?.orders.length === 0) return 0;
-        if (data?.orders.length === 1) return data?.orders[0].total;
+        if (data?.orders.length === 1) {
+          return data.orders[0].isActualMonth ? data?.orders[0].total : 0;
+        }
         return data?.orders[1].total;
       })(),
       isMoney: false,
@@ -40,7 +46,9 @@ export const Summary = () => {
       bgColor: "rgba(38,198,249,0.12)",
       percentage: (() => {
         if (data?.orders.length === 0) return 0;
-        if (data?.orders.length === 1) return Infinity;
+        if (data?.orders.length === 1) {
+          return data.orders[0].isActualMonth ? Infinity : 0;
+        }
         return (data?.orders[1].total / data?.orders[0].total) * 100 - 100;
       })(),
     },
@@ -48,7 +56,9 @@ export const Summary = () => {
       icon: <FaChartBar />,
       digits: (() => {
         if (data?.incomes.length === 0) return 0;
-        if (data?.incomes.length === 1) return data?.incomes[0].total;
+        if (data?.incomes.length === 1) {
+          return data.incomes[0].isActualMonth ? data?.incomes[0].total : 0;
+        }
         return data?.incomes[1].total;
       })(),
       isMoney: true,
@@ -57,7 +67,9 @@ export const Summary = () => {
       bgColor: "rgba(253,181,40,0.12)",
       percentage: (() => {
         if (data?.incomes.length === 0) return 0;
-        if (data?.incomes.length === 1) return Infinity;
+        if (data?.incomes.length === 1) {
+          return data.incomes[0].isActualMonth ? Infinity : 0;
+        }
         return (data?.incomes[1].total / data?.incomes[0].total) * 100 - 100;
       })(),
     },
