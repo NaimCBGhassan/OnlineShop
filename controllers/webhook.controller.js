@@ -10,7 +10,6 @@ const axiosWebhook = axios.create({
 });
 
 const createOrder = async (paymentData) => {
-  console.log("first");
   const newOrder = new Order({
     userId: paymentData.metadata.user_id,
     username: paymentData.metadata.username,

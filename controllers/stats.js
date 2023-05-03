@@ -62,7 +62,7 @@ export const userStats = async (req, res) => {
     .format("YYYY-MM-DD HH:mm:ss");
 
   try {
-    const users = await User.aggregate([
+    let users = await User.aggregate([
       {
         $match: { createdAt: { $gte: new Date(previousMonth) } },
       },
@@ -76,6 +76,15 @@ export const userStats = async (req, res) => {
         },
       },
     ]);
+
+    users = users.map((data) => {
+      const date = new Date(previousMonth).getMonth() + 1;
+      if (data._id === date) {
+        return { ...data, isActualMonth: false };
+      }
+      return { ...data, isActualMonth: true };
+    });
+
     return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
@@ -90,7 +99,7 @@ export const orderStats = async (req, res) => {
     .format("YYYY-MM-DD HH:mm:ss");
 
   try {
-    const orders = await Order.aggregate([
+    let orders = await Order.aggregate([
       {
         $match: { createdAt: { $gte: new Date(previousMonth) } },
       },
@@ -104,6 +113,15 @@ export const orderStats = async (req, res) => {
         },
       },
     ]);
+
+    orders = orders.map((data) => {
+      const date = new Date(previousMonth).getMonth() + 1;
+      if (data._id === date) {
+        return { ...data, isActualMonth: false };
+      }
+      return { ...data, isActualMonth: true };
+    });
+
     return res.status(200).json(orders);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
@@ -118,7 +136,7 @@ export const incomeStats = async (req, res) => {
     .format("YYYY-MM-DD HH:mm:ss");
 
   try {
-    const icomes = await Order.aggregate([
+    let icomes = await Order.aggregate([
       {
         $match: { createdAt: { $gte: new Date(previousMonth) } },
       },
@@ -132,6 +150,15 @@ export const incomeStats = async (req, res) => {
         },
       },
     ]);
+
+    icomes = icomes.map((data) => {
+      const date = new Date(previousMonth).getMonth() + 1;
+      if (data._id === date) {
+        return { ...data, isActualMonth: false };
+      }
+      return { ...data, isActualMonth: true };
+    });
+
     return res.status(200).json(icomes);
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
